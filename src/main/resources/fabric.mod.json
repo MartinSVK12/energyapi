@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "energyapi",
+  "version": "1.0.0",
+
+  "name": "Energy API",
+  "description": "API for energy related processes.",
+  "authors": [
+    "MartinSVK12"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "MIT",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "sunsetsatellite.energyapi.EnergyAPI"
+    ]
+  },
+  "mixins": [
+    "energyapi.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3"
+  },
+  "suggests": {
+  }
+}
