@@ -1,8 +1,9 @@
-package sunsetsatellite.energyapi;
+package sunsetsatellite.energyapi.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
+import sunsetsatellite.energyapi.EnergyAPI;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -19,7 +20,11 @@ public class Config {
         try {
             BufferedWriter configWriter = new BufferedWriter(new FileWriter(configFile));
             configWriter.write("// EnergyAPI configuration file. Configure options here.");
-            configWriter.write(System.getProperty("line.separator") +"//No options.");
+            configWriter.write(System.getProperty("line.separator") +"enableTemplateGenerator=1");
+            configWriter.write(System.getProperty("line.separator") +"enableTemplateMachine=1");
+            configWriter.write(System.getProperty("line.separator") +"enableTemplateWire=1");
+            configWriter.write(System.getProperty("line.separator") +"enableTemplateBatteryBox=1");
+            configWriter.write(System.getProperty("line.separator") +"enableTemplateBattery=1");
             configWriter.write(System.getProperty("line.separator") +"//Configure ID's here. Note: 'null' means a default value will be used.");
 
             for (Field field : EnergyAPI.class.getFields()) {
