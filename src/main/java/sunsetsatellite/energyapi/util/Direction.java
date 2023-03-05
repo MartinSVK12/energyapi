@@ -1,4 +1,4 @@
-package sunsetsatellite.energyapi;
+package sunsetsatellite.energyapi.util;
 
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;

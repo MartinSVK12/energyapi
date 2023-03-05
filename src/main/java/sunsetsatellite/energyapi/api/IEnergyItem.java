@@ -1,4 +1,4 @@
-package sunsetsatellite.energyapi;
+package sunsetsatellite.energyapi.api;
 
 import net.minecraft.src.ItemStack;
 
@@ -9,5 +9,8 @@ public interface IEnergyItem {
 
     int getEnergy(ItemStack stack);
     int getCapacity(ItemStack stack);
-    int getTransferRate(ItemStack stack);
+    int getMaxReceive(ItemStack stack);
+    int getMaxProvide(ItemStack stack);
+
+    void modifyEnergy(ItemStack stack, int amount);
 }

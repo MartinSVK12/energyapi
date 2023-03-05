@@ -1,4 +1,4 @@
-package sunsetsatellite.energyapi;
+package sunsetsatellite.energyapi.util;
 
 public class Vec3 {
     public int x;

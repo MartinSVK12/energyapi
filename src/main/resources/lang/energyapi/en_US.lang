@@ -1,0 +1,12 @@
+energyapi.energy = Energy
+energyapi.suffix = E
+energyapi.usage_ticks = E/t
+energyapi.usage_seconds = E/s
+tile.energyapi.batteryBox.name=Battery Box
+tile.energyapi.batteryBox.desc=A buffer that holds energy.
+item.energyapi.battery.name=Battery
+item.energyapi.battery.desc=A simple battery.
+item.energyapi.batteryUnlimited.name=Unlimited Battery
+item.energyapi.batteryUnlimited.desc=UNLIMITED POWER!!! Creative only.
+item.energyapi.batteryVoid.name=Void Battery
+item.energyapi.batteryVoid.desc=Deletes all energy it receives. Creative only.
