@@ -5,6 +5,7 @@
 
   "name": "Energy API",
   "description": "API for energy related processes.",
+  "icon": "icon.png",
   "authors": [
     "MartinSVK12"
   ],
