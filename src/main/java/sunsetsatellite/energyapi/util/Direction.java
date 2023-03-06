@@ -12,6 +12,7 @@ public enum Direction {
     Z_NEG (new Vec3(0,0,-1));
 
     private final Vec3 vec;
+    private Direction opposite;
 
     Direction(Vec3 vec3) {
         this.vec = vec3;
@@ -21,4 +22,18 @@ public enum Direction {
         Vec3 pos = new Vec3(tile.xCoord + vec.x, tile.yCoord + vec.y, tile.zCoord + vec.z);
         return world.getBlockTileEntity(pos.x,pos.y,pos.z);
     }
+
+    public Direction getOpposite(){
+        return opposite;
+    }
+
+    static {
+        X_POS.opposite = X_NEG;
+        X_NEG.opposite = X_POS;
+        Y_NEG.opposite = Y_POS;
+        Y_POS.opposite = Y_NEG;
+        Z_NEG.opposite = Z_POS;
+        Z_POS.opposite = Z_NEG;
+    }
+
 }

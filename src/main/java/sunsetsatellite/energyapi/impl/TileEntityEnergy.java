@@ -1,13 +1,41 @@
 package sunsetsatellite.energyapi.impl;
 
+import net.minecraft.src.Block;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import sunsetsatellite.energyapi.api.IEnergy;
-import sunsetsatellite.energyapi.util.Direction;
+import sunsetsatellite.energyapi.util.*;
+
+import java.util.HashMap;
 
 public class TileEntityEnergy extends TileEntity implements IEnergy {
     public int energy = 0;
     public int capacity = 0;
+    public TileEntityEnergy lastProvided;
+    public TileEntityEnergy lastReceived;
+    public TickTimer lastTransferMemory;
+    public HashMap<Direction,Connection> connections = new HashMap<>();
+
+    public TileEntityEnergy(){
+        try {
+            this.lastTransferMemory = new TickTimer(this,this.getClass().getMethod("clearLastTransfers"),10,true);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        for (Direction dir : Direction.values()) {
+            connections.put(dir,Connection.NONE);
+        }
+    }
+
+    @Override
+    public void updateEntity() {
+        lastTransferMemory.tick();
+    }
+
+    public void clearLastTransfers(){
+        lastProvided = null;
+        lastReceived = null;
+    }
 
     @Override
     public int getEnergy() {
@@ -75,7 +103,19 @@ public class TileEntityEnergy extends TileEntity implements IEnergy {
     }
 
     @Override
-    public boolean canConnect(Direction dir) {
-        return false;
+    public void setConnection(Direction dir, Connection connection) {
+        connections.replace(dir,connection);
+    }
+
+    @Override
+    public boolean canConnect(Direction dir, Connection connection) {
+        if(connections.get(dir).equals(Connection.BOTH) && !connection.equals(Connection.NONE)){
+            return true;
+        }
+        return connections.get(dir).equals(connection);
+    }
+
+    public BlockInstance toInstance(){
+        return new BlockInstance(Block.blocksList[worldObj.getBlockId(xCoord,yCoord,zCoord)],new Vec3(xCoord,yCoord,zCoord),this);
     }
 }

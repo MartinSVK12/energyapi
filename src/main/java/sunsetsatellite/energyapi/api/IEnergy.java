@@ -1,5 +1,6 @@
 package sunsetsatellite.energyapi.api;
 
+import sunsetsatellite.energyapi.util.Connection;
 import sunsetsatellite.energyapi.util.Direction;
 
 public interface IEnergy extends IEnergyConnection {
@@ -12,4 +13,6 @@ public interface IEnergy extends IEnergyConnection {
     void setEnergy(int amount);
     void modifyEnergy(int amount);
     void setCapacity(int amount);
+
+    void setConnection(Direction dir, Connection connection);
 }

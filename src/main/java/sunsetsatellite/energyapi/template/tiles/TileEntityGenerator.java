@@ -1,44 +1,50 @@
 package sunsetsatellite.energyapi.template.tiles;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.api.IEnergySink;
-import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
-import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
-import sunsetsatellite.energyapi.impl.TileEntityEnergySink;
-import sunsetsatellite.energyapi.template.items.ItemBatteryUnlimited;
-import sunsetsatellite.energyapi.template.items.ItemBatteryVoid;
+import sunsetsatellite.energyapi.api.LookupFuelEnergy;
+import sunsetsatellite.energyapi.impl.*;
 import sunsetsatellite.energyapi.util.Connection;
 import sunsetsatellite.energyapi.util.Direction;
 
-import java.util.ArrayList;
-
-public class TileEntityBatteryBox extends TileEntityEnergyConductor
+public class TileEntityGenerator extends TileEntityEnergyConductor
     implements IInventory {
-    public TileEntityBatteryBox(){
-        setCapacity(50000);
+    public TileEntityGenerator(){
+        setCapacity(10000);
         setEnergy(0);
         setTransfer(250);
-        contents = new ItemStack[2];
+        contents = new ItemStack[3];
         for (Direction dir : Direction.values()) {
             setConnection(dir,Connection.OUTPUT);
         }
-        setConnection(Direction.Y_POS,Connection.INPUT);
     }
 
     @Override
     public void updateEntity() {
         super.updateEntity();
-        /*if(getStackInSlot(0) != null && getStackInSlot(1) != null){
-            if(getStackInSlot(0).getItem() instanceof ItemBatteryUnlimited && getStackInSlot(1).getItem() instanceof ItemBatteryVoid){
-                if(getEnergy() <= 0){
-                    //we do a little trolling :)
-                    worldObj.createExplosion(null,xCoord,yCoord,zCoord,4.0f);
-                    Minecraft.getMinecraft().displayGuiScreen(null);
+        if (this.currentBurnTime > 0) {
+            --this.currentBurnTime;
+            modifyEnergy(getEnergyYieldForItem(currentFuel));
+        }
+
+        if (this.currentBurnTime == 0) {
+            this.maxBurnTime = this.currentBurnTime = this.getBurnTimeFromItem(this.contents[2]) / 5;
+            if (this.currentBurnTime > 0) {
+                currentFuel = this.contents[2];
+                onInventoryChanged();
+                if (this.contents[2] != null) {
+                    --this.contents[2].stackSize;
+                    if (this.contents[2].stackSize == 0) {
+                        this.contents[2] = null;
+                    }
                 }
+            } else {
+                currentFuel = null;
             }
-        }*/
+        }
+
+
         if(getStackInSlot(1) != null && getStackInSlot(1).getItem() instanceof ItemEnergyContainer){
             ItemStack stack = getStackInSlot(1);
             ItemEnergyContainer item = (ItemEnergyContainer) getStackInSlot(1).getItem();
@@ -120,7 +126,11 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
                 contents[j] = new ItemStack(nbttagcompound1);
             }
         }
+        this.currentBurnTime = nbttagcompound.getInteger("BurnTime");
+        this.maxBurnTime = nbttagcompound.getInteger("MaxBurnTime");
+        currentFuel = new ItemStack(nbttagcompound.getCompoundTag("CurrentFuel"));
     }
+
 
     public void writeToNBT(NBTTagCompound nbttagcompound)
     {
@@ -137,7 +147,14 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
                 nbttaglist.setTag(nbttagcompound1);
             }
         }
+        NBTTagCompound fuel = new NBTTagCompound();
+        if(currentFuel != null){
+            currentFuel.writeToNBT(fuel);
+        }
         nbttagcompound.setTag("Items", nbttaglist);
+        nbttagcompound.setCompoundTag("CurrentFuel",fuel);
+        nbttagcompound.setInteger("BurnTime", (short)this.currentBurnTime);
+        nbttagcompound.setInteger("MaxBurnTime", (short)this.maxBurnTime);
     }
 
     public int getInventoryStackLimit()
@@ -154,5 +171,24 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
         return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
     }
 
+    private int getBurnTimeFromItem(ItemStack itemStack) {
+        return itemStack == null ? 0 : LookupFuelFurnace.fuelFurnace().getFuelYield(itemStack.getItem().itemID);
+    }
+
+    private int getEnergyYieldForItem(ItemStack itemStack) {
+        return itemStack == null ? 0 : LookupFuelEnergy.fuelEnergy().getEnergyYield(itemStack.getItem().itemID);
+    }
+
+    public int getBurnTimeRemainingScaled(int i) {
+        return this.maxBurnTime == 0 ? 0 : this.currentBurnTime * i / this.maxBurnTime;
+    }
+
+    public boolean isBurning() {
+        return this.currentBurnTime > 0;
+    }
+
     private ItemStack[] contents;
+    public int maxBurnTime = 0;
+    public int currentBurnTime = 0;
+    public ItemStack currentFuel;
 }
