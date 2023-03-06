@@ -3,6 +3,7 @@ package sunsetsatellite.energyapi.impl;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import sunsetsatellite.energyapi.api.IEnergySource;
+import sunsetsatellite.energyapi.util.Connection;
 import sunsetsatellite.energyapi.util.Direction;
 
 public class TileEntityEnergySource extends TileEntityEnergy implements IEnergySource {
@@ -10,7 +11,7 @@ public class TileEntityEnergySource extends TileEntityEnergy implements IEnergyS
     public int maxProvide = 0;
     @Override
     public int provide(Direction dir, int amount, boolean test) {
-        if(canConnect(dir)){
+        if(canConnect(dir, Connection.OUTPUT)){
             int provided = Math.min(this.energy, Math.min(this.maxProvide, amount));
             if(!test){
                 energy -= provided;

@@ -3,8 +3,10 @@ package sunsetsatellite.energyapi.impl;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.TileEntity;
 import sunsetsatellite.energyapi.api.IEnergySink;
 import sunsetsatellite.energyapi.api.IEnergySource;
+import sunsetsatellite.energyapi.util.Connection;
 import sunsetsatellite.energyapi.util.Direction;
 
 public class TileEntityEnergyConductor extends TileEntityEnergy implements IEnergySink, IEnergySource {
@@ -13,7 +15,7 @@ public class TileEntityEnergyConductor extends TileEntityEnergy implements IEner
 
     @Override
     public int receive(Direction dir, int amount, boolean test) {
-        if(canConnect(dir)){
+        if(canConnect(dir,Connection.INPUT)){
             int received = Math.min(this.capacity - this.energy, Math.min(this.maxReceive, amount));
             if(!test){
                 energy += received;
@@ -43,7 +45,7 @@ public class TileEntityEnergyConductor extends TileEntityEnergy implements IEner
 
     @Override
     public int provide(Direction dir, int amount, boolean test) {
-        if(canConnect(dir)){
+        if(canConnect(dir, Connection.OUTPUT)){
             int provided = Math.min(this.energy, Math.min(this.maxProvide, amount));
             if(!test){
                 energy -= provided;
@@ -118,5 +120,25 @@ public class TileEntityEnergyConductor extends TileEntityEnergy implements IEner
     public void setTransfer(int amount){
         maxProvide = amount;
         maxReceive = amount;
+    }
+
+    @Override
+    public void updateEntity() {
+        for (Direction dir : Direction.values()) {
+            TileEntity facingTile = dir.getTileEntity(worldObj,this);
+            if(facingTile instanceof IEnergySink && !facingTile.equals(lastReceived)){
+                int provided = provide(dir,getMaxProvide(),true);
+                if(provided <= 0){
+                    continue;
+                }
+                int received = ((TileEntityEnergyConductor) facingTile).receive(dir.getOpposite(),provided,true);
+                if(received > 0){
+                    ((TileEntityEnergyConductor) facingTile).receive(dir.getOpposite(),provided,false);
+                    provide(dir,received,false);
+                    lastProvided = (TileEntityEnergy) facingTile;
+                    ((TileEntityEnergy) facingTile).lastReceived = this;
+                }
+            }
+        }
     }
 }

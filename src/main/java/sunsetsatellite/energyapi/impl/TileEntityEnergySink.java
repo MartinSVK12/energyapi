@@ -3,6 +3,7 @@ package sunsetsatellite.energyapi.impl;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import sunsetsatellite.energyapi.api.IEnergySink;
+import sunsetsatellite.energyapi.util.Connection;
 import sunsetsatellite.energyapi.util.Direction;
 
 public class TileEntityEnergySink extends TileEntityEnergy implements IEnergySink {
@@ -11,7 +12,7 @@ public class TileEntityEnergySink extends TileEntityEnergy implements IEnergySin
 
     @Override
     public int receive(Direction dir, int amount, boolean test) {
-        if(canConnect(dir)){
+        if(canConnect(dir, Connection.INPUT)){
             int received = Math.min(this.capacity - this.energy, Math.min(this.maxReceive, amount));
             if(!test){
                 energy += received;

@@ -1,53 +1,45 @@
 package sunsetsatellite.energyapi.template.tiles;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
-import sunsetsatellite.energyapi.EnergyAPI;
-import sunsetsatellite.energyapi.api.IEnergySink;
 import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
 import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
-import sunsetsatellite.energyapi.impl.TileEntityEnergySink;
-import sunsetsatellite.energyapi.template.items.ItemBatteryUnlimited;
-import sunsetsatellite.energyapi.template.items.ItemBatteryVoid;
 import sunsetsatellite.energyapi.util.Connection;
 import sunsetsatellite.energyapi.util.Direction;
 
-import java.util.ArrayList;
-
-public class TileEntityBatteryBox extends TileEntityEnergyConductor
+public class TileEntityMachine extends TileEntityEnergyConductor
     implements IInventory {
-    public TileEntityBatteryBox(){
-        setCapacity(50000);
+    public TileEntityMachine(){
+        setCapacity(3000);
         setEnergy(0);
         setTransfer(250);
-        contents = new ItemStack[2];
+        contents = new ItemStack[3];
         for (Direction dir : Direction.values()) {
-            setConnection(dir,Connection.OUTPUT);
+            setConnection(dir,Connection.INPUT);
         }
-        setConnection(Direction.Y_POS,Connection.INPUT);
     }
 
     @Override
     public void updateEntity() {
         super.updateEntity();
-        /*if(getStackInSlot(0) != null && getStackInSlot(1) != null){
-            if(getStackInSlot(0).getItem() instanceof ItemBatteryUnlimited && getStackInSlot(1).getItem() instanceof ItemBatteryVoid){
-                if(getEnergy() <= 0){
-                    //we do a little trolling :)
-                    worldObj.createExplosion(null,xCoord,yCoord,zCoord,4.0f);
-                    Minecraft.getMinecraft().displayGuiScreen(null);
-                }
-            }
-        }*/
-        if(getStackInSlot(1) != null && getStackInSlot(1).getItem() instanceof ItemEnergyContainer){
+        if(getStackInSlot(1) != null && getStackInSlot(1).getItem() instanceof ItemEnergyContainer) {
             ItemStack stack = getStackInSlot(1);
             ItemEnergyContainer item = (ItemEnergyContainer) getStackInSlot(1).getItem();
-            provide(stack,getMaxProvide(),false);
-        }
-        if(getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof ItemEnergyContainer) {
-            ItemStack stack = getStackInSlot(0);
-            ItemEnergyContainer item = (ItemEnergyContainer) getStackInSlot(0).getItem();
             receive(stack,getMaxReceive(),false);
+        }
+
+        if (this.enoughEnergy() && this.canSmelt()) {
+            modifyEnergy(-usage);
+        }
+
+        if (this.enoughEnergy() && this.canSmelt()) {
+            ++this.currentCookTime;
+            if (this.currentCookTime == this.maxCookTime) {
+                this.currentCookTime = 0;
+                this.smeltItem();
+                onInventoryChanged();
+            }
+        } else {
+            this.currentCookTime = 0;
         }
     }
 
@@ -120,7 +112,10 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
                 contents[j] = new ItemStack(nbttagcompound1);
             }
         }
+        this.currentCookTime = nbttagcompound.getInteger("CookTime");
+        this.maxCookTime = nbttagcompound.getInteger("MaxCookTime");
     }
+
 
     public void writeToNBT(NBTTagCompound nbttagcompound)
     {
@@ -138,6 +133,8 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
             }
         }
         nbttagcompound.setTag("Items", nbttaglist);
+        nbttagcompound.setInteger("CookTime", (short)this.currentCookTime);
+        nbttagcompound.setInteger("MaxCookTime", (short)this.maxCookTime);
     }
 
     public int getInventoryStackLimit()
@@ -154,5 +151,53 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
         return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
     }
 
+
+    public int getCookProgressScaled(int i) {
+        return this.maxCookTime == 0 ? 0 : this.currentCookTime * i / this.maxCookTime;
+    }
+
+    private boolean canSmelt() {
+        if (this.contents[0] == null) {
+            return false;
+        } else {
+            ItemStack itemstack = RecipesFurnace.smelting().getSmeltingResult(this.contents[0].getItem().itemID);
+            if (itemstack == null) {
+                return false;
+            } else if (this.contents[2] == null) {
+                return true;
+            } else if (!this.contents[2].isItemEqual(itemstack)) {
+                return false;
+            } else if (this.contents[2].stackSize < this.getInventoryStackLimit() && this.contents[2].stackSize < this.contents[2].getMaxStackSize()) {
+                return true;
+            } else {
+                return this.contents[2].stackSize < itemstack.getMaxStackSize();
+            }
+        }
+    }
+
+    public void smeltItem() {
+        if (this.canSmelt()) {
+            ItemStack itemstack = RecipesFurnace.smelting().getSmeltingResult(this.contents[0].getItem().itemID);
+            if (this.contents[2] == null) {
+                this.contents[2] = itemstack.copy();
+            } else if (this.contents[2].itemID == itemstack.itemID) {
+                ++this.contents[2].stackSize;
+            }
+
+            --this.contents[0].stackSize;
+            if (this.contents[0].stackSize <= 0) {
+                this.contents[0] = null;
+            }
+
+        }
+    }
+
+    public boolean enoughEnergy() {
+        return this.energy >= usage;
+    }
+
     private ItemStack[] contents;
+    public int maxCookTime = 200;
+    public int currentCookTime = 0;
+    public int usage = 5;
 }

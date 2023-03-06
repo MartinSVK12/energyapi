@@ -4,7 +4,8 @@
   "package": "sunsetsatellite.energyapi.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "GuiContainerMixin"
+    "GuiContainerMixin",
+    "RenderBlocksMixin"
   ],
   "client": [
   ],

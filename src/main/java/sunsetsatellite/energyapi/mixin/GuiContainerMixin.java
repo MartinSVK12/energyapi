@@ -38,6 +38,12 @@ public class GuiContainerMixin extends GuiScreen
     )
     private void setDescription(int x, int y, float renderPartialTicks, CallbackInfo ci, int centerX, int centerY, Slot slot, InventoryPlayer inventoryplayer, StringTranslate trans, StringBuilder text, boolean multiLine, boolean control, boolean shift, boolean showDescription, boolean isCrafting, String itemName, String itemNick, boolean debug){
         ItemStack stack = slot.getStack();
+        if(stack != null && stack.getItem() instanceof ItemBlock){
+            Block block = Block.blocksList[stack.getItem().itemID];
+            if(block instanceof ICustomDescription){
+                text.append(((ICustomDescription) block).getDescription(stack)).append("\n");
+            }
+        }
         if(stack != null && stack.getItem() instanceof ICustomDescription){
             text.append(((ICustomDescription) stack.getItem()).getDescription(stack)).append("\n");
         }
