@@ -3,7 +3,7 @@
   "id": "energyapi",
   "version": "1.0.0",
 
-  "name": "Energy API",
+  "name": "Energy API (BTA)",
   "description": "API for energy related processes.",
   "icon": "icon.png",
   "authors": [
