@@ -80,7 +80,6 @@ public class EnergyAPI implements ModInitializer {
         }
         if(Config.getFromConfig("enableTemplateWire",1) == 1){
             wire = BlockHelper.createBlock(MOD_ID,new BlockWire(1002,Material.circuits),"wire","wire.png",Block.soundMetalFootstep,1,1,0);
-            EnergyAPI.LOGGER.info("X:"+wireTex[0]+" Y:"+wireTex[1]);
             Item.itemsList[wire.blockID].setIconCoord(wireTex[0],wireTex[1]);
             EntityHelper.createTileEntity(TileEntityWire.class,"Wire");
         }
