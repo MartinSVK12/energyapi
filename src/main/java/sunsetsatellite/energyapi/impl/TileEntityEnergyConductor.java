@@ -131,9 +131,9 @@ public class TileEntityEnergyConductor extends TileEntityEnergy implements IEner
                 if(provided <= 0){
                     continue;
                 }
-                int received = ((TileEntityEnergyConductor) facingTile).receive(dir.getOpposite(),provided,true);
+                int received = ((IEnergySink) facingTile).receive(dir.getOpposite(),provided,true);
                 if(received > 0){
-                    ((TileEntityEnergyConductor) facingTile).receive(dir.getOpposite(),provided,false);
+                    ((IEnergySink) facingTile).receive(dir.getOpposite(),provided,false);
                     provide(dir,received,false);
                     lastProvided = (TileEntityEnergy) facingTile;
                     ((TileEntityEnergy) facingTile).lastReceived = this;

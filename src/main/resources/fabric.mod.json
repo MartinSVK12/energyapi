@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "energyapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "name": "Energy API (BTA)",
   "description": "API for energy related processes.",
@@ -27,7 +27,8 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.13.3"
+    "fabricloader": ">=0.13.3",
+    "halplibe": ">=1.1.4"
   },
   "suggests": {
   }

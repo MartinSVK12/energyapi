@@ -2,14 +2,13 @@ package sunsetsatellite.energyapi.api;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
-import net.minecraft.src.LookupFuelFurnace;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LookupFuelEnergy {
     private static final LookupFuelEnergy fuelBase = new LookupFuelEnergy();
-    protected Map<Integer, Integer> fuelList = new HashMap();
+    protected Map<Integer, Integer> fuelList = new HashMap<>();
 
     public static LookupFuelEnergy fuelEnergy() {
         return fuelBase;
@@ -64,7 +63,7 @@ public class LookupFuelEnergy {
     }
 
     public int getEnergyYield(int id) {
-        return this.fuelList.get(id) == null ? 0 : (Integer)this.fuelList.get(id);
+        return this.fuelList.get(id) == null ? 0 : this.fuelList.get(id);
     }
 
     public Map<Integer, Integer> getFuelList() {
