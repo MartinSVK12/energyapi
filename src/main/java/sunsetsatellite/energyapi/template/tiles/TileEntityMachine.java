@@ -95,7 +95,7 @@ public class TileEntityMachine extends TileEntityEnergyConductor
 
     public String getInvName()
     {
-        return "Battery Box";
+        return "Energy Machine";
     }
 
     public void readFromNBT(NBTTagCompound nbttagcompound)

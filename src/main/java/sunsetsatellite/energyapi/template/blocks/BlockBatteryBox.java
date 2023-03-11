@@ -1,7 +1,8 @@
 package sunsetsatellite.energyapi.template.blocks;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
+import sunsetsatellite.energyapi.EnergyAPI;
+import sunsetsatellite.energyapi.template.containers.ContainerBatteryBox;
 import sunsetsatellite.energyapi.template.gui.GuiBatteryBox;
 import sunsetsatellite.energyapi.template.tiles.TileEntityBatteryBox;
 
@@ -19,7 +20,7 @@ public class BlockBatteryBox extends BlockContainerRotatable {
         {
             TileEntityBatteryBox tile = (TileEntityBatteryBox) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiBatteryBox(entityplayer.inventory, tile));
+                EnergyAPI.displayGui(entityplayer,new GuiBatteryBox(entityplayer.inventory, tile),new ContainerBatteryBox(entityplayer.inventory,tile),tile);
             }
             return true;
         }
