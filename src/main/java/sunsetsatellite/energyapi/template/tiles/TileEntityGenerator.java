@@ -49,12 +49,15 @@ public class TileEntityGenerator extends TileEntityEnergyConductor
             ItemStack stack = getStackInSlot(1);
             ItemEnergyContainer item = (ItemEnergyContainer) getStackInSlot(1).getItem();
             provide(stack,getMaxProvide(),false);
+            onInventoryChanged();
         }
         if(getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof ItemEnergyContainer) {
             ItemStack stack = getStackInSlot(0);
             ItemEnergyContainer item = (ItemEnergyContainer) getStackInSlot(0).getItem();
             receive(stack,getMaxReceive(),false);
+            onInventoryChanged();
         }
+
     }
 
     public int getSizeInventory()
@@ -109,7 +112,7 @@ public class TileEntityGenerator extends TileEntityEnergyConductor
 
     public String getInvName()
     {
-        return "Battery Box";
+        return "Generator";
     }
 
     public void readFromNBT(NBTTagCompound nbttagcompound)

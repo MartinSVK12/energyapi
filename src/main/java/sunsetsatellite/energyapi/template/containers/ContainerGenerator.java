@@ -1,12 +1,15 @@
 package sunsetsatellite.energyapi.template.containers;
 
 import net.minecraft.src.*;
-import sunsetsatellite.energyapi.template.tiles.TileEntityBatteryBox;
 import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 
-public class ContainerGenerator extends Container {
+import java.util.Iterator;
 
-    TileEntity tile;
+public class ContainerGenerator extends ContainerEnergy {
+
+    private int maxBurnTime = 0;
+    private int currentBurnTime = 0;
+    public ItemStack currentFuel;
 
     public ContainerGenerator(IInventory iInventory, TileEntityGenerator tileEntity){
         tile = tileEntity;
@@ -30,6 +33,39 @@ public class ContainerGenerator extends Container {
         {
             addSlot(new Slot(iInventory, k, 8 + k * 18, 142));
         }
+    }
+
+    public void updateInventory() {
+        super.updateInventory();
+        Iterator var1 = this.crafters.iterator();
+
+        while(var1.hasNext()) {
+            Object crafter = var1.next();
+            ICrafting icrafting = (ICrafting)crafter;
+
+            if (this.currentBurnTime != ((TileEntityGenerator)tile).currentBurnTime) {
+                icrafting.updateCraftingInventoryInfo(this, 1, ((TileEntityGenerator)tile).currentBurnTime);
+            }
+
+            if (this.maxBurnTime != ((TileEntityGenerator)tile).maxBurnTime) {
+                icrafting.updateCraftingInventoryInfo(this, 3, ((TileEntityGenerator)tile).maxBurnTime);
+            }
+        }
+
+        this.currentBurnTime = ((TileEntityGenerator)tile).currentBurnTime;
+        this.maxBurnTime = ((TileEntityGenerator)tile).maxBurnTime;
+    }
+
+    public void updateClientProgressBar(int id, int value) {
+
+        if (id == 1) {
+            ((TileEntityGenerator)tile).currentBurnTime = value;
+        }
+
+        if (id == 3) {
+            ((TileEntityGenerator)tile).maxBurnTime = value;
+        }
+
     }
 
     @Override

@@ -3,9 +3,7 @@ package sunsetsatellite.energyapi.template.containers;
 import net.minecraft.src.*;
 import sunsetsatellite.energyapi.template.tiles.TileEntityBatteryBox;
 
-public class ContainerBatteryBox extends Container {
-
-    TileEntity tile;
+public class ContainerBatteryBox extends ContainerEnergy {
 
     public ContainerBatteryBox(IInventory iInventory, TileEntityBatteryBox tileEntity){
         tile = tileEntity;

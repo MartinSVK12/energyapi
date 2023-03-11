@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "energyapi",
-  "version": "1.0.1",
+  "version": "1.1",
 
   "name": "Energy API (BTA)",
   "description": "API for energy related processes.",
@@ -28,7 +28,8 @@
 
   "depends": {
     "fabricloader": ">=0.13.3",
-    "halplibe": ">=1.1.4"
+    "halplibe": ">=1.1.4",
+    "minecraft": "1.7.6"
   },
   "suggests": {
   }

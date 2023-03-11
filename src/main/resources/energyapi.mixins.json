@@ -4,7 +4,10 @@
   "package": "sunsetsatellite.energyapi.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "EntityPlayerMPMixin",
     "GuiContainerMixin",
+    "NetClientHandlerMixin",
+    "PacketAccessor",
     "RenderBlocksMixin"
   ],
   "client": [

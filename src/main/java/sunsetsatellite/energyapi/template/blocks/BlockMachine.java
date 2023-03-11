@@ -1,10 +1,9 @@
 package sunsetsatellite.energyapi.template.blocks;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
-import sunsetsatellite.energyapi.template.gui.GuiGenerator;
+import sunsetsatellite.energyapi.EnergyAPI;
+import sunsetsatellite.energyapi.template.containers.ContainerMachine;
 import sunsetsatellite.energyapi.template.gui.GuiMachine;
-import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 
 public class BlockMachine extends BlockContainerRotatable {
@@ -21,7 +20,7 @@ public class BlockMachine extends BlockContainerRotatable {
         {
             TileEntityMachine tile = (TileEntityMachine) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiMachine(entityplayer.inventory, tile));
+                EnergyAPI.displayGui(entityplayer,new GuiMachine(entityplayer.inventory, tile),new ContainerMachine(entityplayer.inventory,tile),tile);
             }
             return true;
         }

@@ -25,6 +25,8 @@ public class Config {
             configWriter.write(System.getProperty("line.separator") +"enableTemplateWire=1");
             configWriter.write(System.getProperty("line.separator") +"enableTemplateBatteryBox=1");
             configWriter.write(System.getProperty("line.separator") +"enableTemplateBattery=1");
+            configWriter.write(System.getProperty("line.separator") +"GuiID=7");
+            configWriter.write(System.getProperty("line.separator") +"PacketUpdateEnergyID=109");
             configWriter.write(System.getProperty("line.separator") +"//Configure ID's here. Note: 'null' means a default value will be used.");
 
             for (Field field : EnergyAPI.class.getFields()) {

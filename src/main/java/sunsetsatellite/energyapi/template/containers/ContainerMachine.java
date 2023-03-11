@@ -1,12 +1,14 @@
 package sunsetsatellite.energyapi.template.containers;
 
 import net.minecraft.src.*;
-import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 
-public class ContainerMachine extends Container {
+import java.util.Iterator;
 
-    TileEntity tile;
+public class ContainerMachine extends ContainerEnergy {
+
+    private int currentCookTime;
+    private int maxCookTime;
 
     public ContainerMachine(IInventory iInventory, TileEntityMachine tileEntity){
         tile = tileEntity;
@@ -30,6 +32,39 @@ public class ContainerMachine extends Container {
         {
             addSlot(new Slot(iInventory, k, 8 + k * 18, 142));
         }
+    }
+
+    public void updateInventory() {
+        super.updateInventory();
+        Iterator var1 = this.crafters.iterator();
+
+        while(var1.hasNext()) {
+            Object crafter = var1.next();
+            ICrafting icrafting = (ICrafting)crafter;
+
+            if (this.currentCookTime != ((TileEntityMachine)tile).currentCookTime) {
+                icrafting.updateCraftingInventoryInfo(this, 1, ((TileEntityMachine)tile).currentCookTime);
+            }
+
+            if (this.maxCookTime != ((TileEntityMachine)tile).maxCookTime) {
+                icrafting.updateCraftingInventoryInfo(this, 3, ((TileEntityMachine)tile).maxCookTime);
+            }
+        }
+
+        this.currentCookTime = ((TileEntityMachine)tile).currentCookTime;
+        this.maxCookTime = ((TileEntityMachine)tile).maxCookTime;
+    }
+
+    public void updateClientProgressBar(int id, int value) {
+
+        if (id == 1) {
+            ((TileEntityMachine)tile).currentCookTime = value;
+        }
+
+        if (id == 3) {
+            ((TileEntityMachine)tile).maxCookTime = value;
+        }
+
     }
 
     @Override
