@@ -11,8 +11,8 @@ import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 
 public class GuiMachine extends GuiContainer {
 
-    String name = "Energy Machine";
-    TileEntityMachine tile;
+    public String name = "Energy Machine";
+    public TileEntityMachine tile;
     public GuiMachine(InventoryPlayer inventoryPlayer, TileEntityMachine tile) {
         super(new ContainerMachine(inventoryPlayer,tile));
         this.tile = tile;

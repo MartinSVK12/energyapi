@@ -14,7 +14,7 @@ public class ContainerEnergy extends Container {
     public int maxProvide;
     public int maxReceive;
 
-    TileEntity tile;
+    public TileEntity tile;
     public void updateClientEnergy(int energy, int capacity, int maxReceive, int maxProvide){
         ((TileEntityEnergyConductor)tile).energy = energy;
         ((TileEntityEnergyConductor)tile).capacity = capacity;
