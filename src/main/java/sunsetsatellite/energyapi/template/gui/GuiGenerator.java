@@ -14,8 +14,8 @@ import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 
 public class GuiGenerator extends GuiContainer {
 
-    String name = "Generator";
-    TileEntityGenerator tile;
+    public String name = "Generator";
+    public TileEntityGenerator tile;
     public GuiGenerator(InventoryPlayer inventoryPlayer, TileEntityGenerator tile) {
         super(new ContainerGenerator(inventoryPlayer,tile));
         this.tile = tile;

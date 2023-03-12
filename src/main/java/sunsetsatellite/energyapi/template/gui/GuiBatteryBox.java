@@ -12,8 +12,8 @@ import sunsetsatellite.energyapi.template.tiles.TileEntityBatteryBox;
 
 public class GuiBatteryBox extends GuiContainer {
 
-    String name = "Battery Box";
-    TileEntityBatteryBox tile;
+    public String name = "Battery Box";
+    public TileEntityBatteryBox tile;
     public GuiBatteryBox(InventoryPlayer inventoryPlayer, TileEntityBatteryBox tile) {
         super(new ContainerBatteryBox(inventoryPlayer,tile));
         this.tile = tile;
