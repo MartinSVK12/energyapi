@@ -27,6 +27,10 @@ public class Config {
             configWriter.write(System.getProperty("line.separator") +"enableTemplateBattery=1");
             configWriter.write(System.getProperty("line.separator") +"GuiID=7");
             configWriter.write(System.getProperty("line.separator") +"PacketUpdateEnergyID=109");
+            configWriter.write(System.getProperty("line.separator") +"energyName=Energy");
+            configWriter.write(System.getProperty("line.separator") +"energySuffix=E");
+            configWriter.write(System.getProperty("line.separator") +"energyUsageTicks=E/s");
+            configWriter.write(System.getProperty("line.separator") +"energyUsageSeconds=E/s");
             configWriter.write(System.getProperty("line.separator") +"//Configure ID's here. Note: 'null' means a default value will be used.");
 
             for (Field field : EnergyAPI.class.getFields()) {
@@ -81,6 +85,34 @@ public class Config {
             configReader.close();
         } catch (Exception exception) {
            // exception.printStackTrace();
+        }
+        return base;
+    }
+
+    public static String getFromConfig(String s2, String base){
+        try {
+            BufferedReader configReader = new BufferedReader(new FileReader(configFile));
+            String s;
+            while ((s = configReader.readLine()) != null) {
+                if (s.charAt(0) == '/' && s.charAt(1) == '/') {
+                    continue; // Ignore comments
+                }
+                else if (s.contains("=")) {
+                    String[] as = s.split("=");
+                    String name = as[0];
+                    String value = as[1];
+                    //System.out.println(name +" ("+s2+") "+": "+id);
+                    if (name.equals(s2)){
+                        return value;
+                    } else {
+                        continue;
+                    }
+                }
+            }
+
+            configReader.close();
+        } catch (Exception exception) {
+            // exception.printStackTrace();
         }
         return base;
     }

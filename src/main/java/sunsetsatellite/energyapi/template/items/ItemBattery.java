@@ -5,6 +5,7 @@ import net.minecraft.src.StringTranslate;
 import net.minecraft.src.command.ChatColor;
 import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
+import sunsetsatellite.energyapi.util.Config;
 import sunsetsatellite.energyapi.util.ICustomDescription;
 
 public class ItemBattery extends ItemEnergyContainer implements ICustomDescription {
@@ -29,7 +30,7 @@ public class ItemBattery extends ItemEnergyContainer implements ICustomDescripti
         StringBuilder text = new StringBuilder();
         StringTranslate trans = StringTranslate.getInstance();
         ItemEnergyContainer item = (ItemEnergyContainer) stack.getItem();
-        return text.append(ChatColor.white).append(trans.translateKey("energyapi.energy")).append(": ").append(ChatColor.lightGray).append(item.getEnergy(stack)).append(" ").append(trans.translateKey("energyapi.suffix")).append("/").append(item.getCapacity(stack)).append(" ").append(trans.translateKey("energyapi.suffix")).append("\n").append(ChatColor.white).append("Max Transfer: ").append(ChatColor.lightGray).append(item.getMaxReceive(stack)).append(" ").append(trans.translateKey("energyapi.suffix")).append(" IN ").append("| ").append(item.getMaxProvide(stack)).append(" ").append(trans.translateKey("energyapi.suffix")).append(" OUT").toString();
+        return text.append(ChatColor.white).append(Config.getFromConfig("energyName","Energy")).append(": ").append(ChatColor.lightGray).append(item.getEnergy(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append("/").append(item.getCapacity(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append("\n").append(ChatColor.white).append("Max Transfer: ").append(ChatColor.lightGray).append(item.getMaxReceive(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" IN ").append("| ").append(item.getMaxProvide(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" OUT").toString();
 
     }
 }
