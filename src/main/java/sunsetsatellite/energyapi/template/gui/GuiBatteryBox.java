@@ -9,6 +9,7 @@ import org.lwjgl.util.Color;
 import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.template.containers.ContainerBatteryBox;
 import sunsetsatellite.energyapi.template.tiles.TileEntityBatteryBox;
+import sunsetsatellite.energyapi.util.Config;
 
 public class GuiBatteryBox extends GuiContainer {
 
@@ -50,7 +51,7 @@ public class GuiBatteryBox extends GuiContainer {
         StringBuilder text = new StringBuilder();
         if(x > i+80 && x < i+94){
             if(y > j+40 && y < j+46){
-                text.append(trans.translateKey("energyapi.energy")).append(": ").append(tile.energy).append(" ").append(trans.translateKey("energyapi.suffix")).append("/").append(tile.capacity).append(" ").append(trans.translateKey("energyapi.suffix"));
+                text.append(Config.getFromConfig("energyName","Energy")).append(": ").append(tile.energy).append(" ").append(Config.getFromConfig("energySuffix","E")).append("/").append(tile.capacity).append(" ").append(Config.getFromConfig("energySuffix","E"));
                 this.drawTooltip(text.toString(),x,y,8,-8,true);
             }
         }

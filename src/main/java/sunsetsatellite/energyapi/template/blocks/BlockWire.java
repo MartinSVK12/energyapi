@@ -1,12 +1,9 @@
 package sunsetsatellite.energyapi.template.blocks;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import net.minecraft.src.command.ChatColor;
-import sunsetsatellite.energyapi.EnergyAPI;
-import sunsetsatellite.energyapi.template.gui.GuiGenerator;
-import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 import sunsetsatellite.energyapi.template.tiles.TileEntityWire;
+import sunsetsatellite.energyapi.util.Config;
 import sunsetsatellite.energyapi.util.ICustomDescription;
 
 public class BlockWire extends BlockContainer implements ICustomDescription {
@@ -42,6 +39,6 @@ public class BlockWire extends BlockContainer implements ICustomDescription {
     public String getDescription(ItemStack stack) {
         StringBuilder text = new StringBuilder();
         StringTranslate trans = StringTranslate.getInstance();
-        return text.append(ChatColor.white).append("Max Transfer: ").append(ChatColor.lightGray).append(100).append(" ").append(trans.translateKey("energyapi.suffix")).append(" IN ").append("| ").append(100).append(" ").append(trans.translateKey("energyapi.suffix")).append(" OUT").toString();
+        return text.append(ChatColor.white).append("Max Transfer: ").append(ChatColor.lightGray).append(100).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" IN ").append("| ").append(100).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" OUT").toString();
     }
 }

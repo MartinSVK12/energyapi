@@ -1,7 +1,3 @@
-energyapi.energy = Energy
-energyapi.suffix = E
-energyapi.usage_ticks = E/t
-energyapi.usage_seconds = E/s
 tile.energyapi.batteryBox.name=Battery Box
 tile.energyapi.batteryBox.desc=A buffer that holds energy.
 tile.energyapi.generator.name=Generator
