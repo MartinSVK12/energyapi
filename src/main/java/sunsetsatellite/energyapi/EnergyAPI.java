@@ -114,7 +114,7 @@ public class EnergyAPI implements ModInitializer {
 
     public static void displayGui(EntityPlayer entityplayer, GuiScreen guiScreen, Container container, IInventory tile) {
         if(entityplayer instanceof EntityPlayerMP) {
-            ((IEntityPlayerMP)entityplayer).displayGuiScreen(guiScreen,container,tile);
+            ((IEntityPlayerMP)entityplayer).displayGuiScreen_energyapi(guiScreen,container,tile);
         } else {
             Minecraft.getMinecraft().displayGuiScreen(guiScreen);
         }
