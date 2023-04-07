@@ -3,8 +3,8 @@ package sunsetsatellite.energyapi.template.tiles;
 import net.minecraft.src.*;
 import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
 import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
-import sunsetsatellite.energyapi.util.Connection;
-import sunsetsatellite.energyapi.util.Direction;
+import sunsetsatellite.sunsetutils.util.Connection;
+import sunsetsatellite.sunsetutils.util.Direction;
 
 public class TileEntityMachine extends TileEntityEnergyConductor
     implements IInventory {

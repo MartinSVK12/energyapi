@@ -3,6 +3,7 @@ package sunsetsatellite.energyapi.util;
 import net.minecraft.src.Block;
 import net.minecraft.src.TileEntity;
 import org.jetbrains.annotations.NotNull;
+import sunsetsatellite.sunsetutils.util.Vec3i;
 
 import java.util.Objects;
 
@@ -10,10 +11,10 @@ public class BlockInstance {
     @NotNull
     public Block block;
     @NotNull
-    public Vec3 pos;
+    public Vec3i pos;
     public TileEntity tile;
 
-    public BlockInstance(@NotNull Block block, @NotNull Vec3 pos, TileEntity tile){
+    public BlockInstance(@NotNull Block block, @NotNull Vec3i pos, TileEntity tile){
         this.block = block;
         this.pos = pos;
         this.tile = tile;

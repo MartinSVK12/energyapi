@@ -5,8 +5,8 @@ import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.api.IEnergySink;
 import sunsetsatellite.energyapi.api.LookupFuelEnergy;
 import sunsetsatellite.energyapi.impl.*;
-import sunsetsatellite.energyapi.util.Connection;
-import sunsetsatellite.energyapi.util.Direction;
+import sunsetsatellite.sunsetutils.util.Connection;
+import sunsetsatellite.sunsetutils.util.Direction;
 
 public class TileEntityGenerator extends TileEntityEnergyConductor
     implements IInventory {

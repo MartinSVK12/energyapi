@@ -6,8 +6,8 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import sunsetsatellite.energyapi.api.IEnergySink;
 import sunsetsatellite.energyapi.api.IEnergySource;
-import sunsetsatellite.energyapi.util.Connection;
-import sunsetsatellite.energyapi.util.Direction;
+import sunsetsatellite.sunsetutils.util.Connection;
+import sunsetsatellite.sunsetutils.util.Direction;
 
 public class TileEntityEnergyConductor extends TileEntityEnergy implements IEnergySink, IEnergySource {
     public int maxReceive = 0;

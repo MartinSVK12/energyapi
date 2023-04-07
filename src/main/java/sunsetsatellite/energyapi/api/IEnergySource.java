@@ -1,7 +1,7 @@
 package sunsetsatellite.energyapi.api;
 
 import net.minecraft.src.ItemStack;
-import sunsetsatellite.energyapi.util.Direction;
+import sunsetsatellite.sunsetutils.util.Direction;
 
 public interface IEnergySource extends IEnergy {
     int provide(Direction dir, int amount, boolean test);

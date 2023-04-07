@@ -3,8 +3,8 @@ package sunsetsatellite.energyapi.impl;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import sunsetsatellite.energyapi.api.IEnergySink;
-import sunsetsatellite.energyapi.util.Connection;
-import sunsetsatellite.energyapi.util.Direction;
+import sunsetsatellite.sunsetutils.util.Connection;
+import sunsetsatellite.sunsetutils.util.Direction;
 
 public class TileEntityEnergySink extends TileEntityEnergy implements IEnergySink {
 

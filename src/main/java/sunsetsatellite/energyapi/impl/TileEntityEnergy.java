@@ -5,6 +5,10 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import sunsetsatellite.energyapi.api.IEnergy;
 import sunsetsatellite.energyapi.util.*;
+import sunsetsatellite.sunsetutils.util.Connection;
+import sunsetsatellite.sunsetutils.util.Direction;
+import sunsetsatellite.sunsetutils.util.TickTimer;
+import sunsetsatellite.sunsetutils.util.Vec3i;
 
 import java.util.HashMap;
 
@@ -14,7 +18,7 @@ public class TileEntityEnergy extends TileEntity implements IEnergy {
     public TileEntityEnergy lastProvided;
     public TileEntityEnergy lastReceived;
     public TickTimer lastTransferMemory;
-    public HashMap<Direction,Connection> connections = new HashMap<>();
+    public HashMap<Direction, Connection> connections = new HashMap<>();
 
     public TileEntityEnergy(){
         try {
@@ -116,6 +120,6 @@ public class TileEntityEnergy extends TileEntity implements IEnergy {
     }
 
     public BlockInstance toInstance(){
-        return new BlockInstance(Block.blocksList[worldObj.getBlockId(xCoord,yCoord,zCoord)],new Vec3(xCoord,yCoord,zCoord),this);
+        return new BlockInstance(Block.blocksList[worldObj.getBlockId(xCoord,yCoord,zCoord)],new Vec3i(xCoord,yCoord,zCoord),this);
     }
 }

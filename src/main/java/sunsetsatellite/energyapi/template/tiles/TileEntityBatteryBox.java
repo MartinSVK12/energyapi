@@ -9,8 +9,8 @@ import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
 import sunsetsatellite.energyapi.impl.TileEntityEnergySink;
 import sunsetsatellite.energyapi.template.items.ItemBatteryUnlimited;
 import sunsetsatellite.energyapi.template.items.ItemBatteryVoid;
-import sunsetsatellite.energyapi.util.Connection;
-import sunsetsatellite.energyapi.util.Direction;
+import sunsetsatellite.sunsetutils.util.Connection;
+import sunsetsatellite.sunsetutils.util.Direction;
 
 import java.util.ArrayList;
 
