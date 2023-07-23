@@ -29,7 +29,8 @@
   "depends": {
     "fabricloader": ">=0.13.3",
     "halplibe": ">=1.1.4",
-    "minecraft": "1.7.6"
+    "minecraft": "1.7.6",
+    "sunsetutils": ">=1.0.0"
   },
   "suggests": {
   }

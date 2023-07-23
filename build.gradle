@@ -50,6 +50,22 @@ repositories {
 		}
 		metadataSources { artifact() }
 	}
+	ivy {
+		url = "https://github.com/MartinSVK12"
+		patternLayout {
+			artifact "[organisation]/releases/download/[revision]-BTA/[module]-[revision].jar"
+			m2compatible = true
+		}
+		metadataSources { artifact() }
+	}
+	ivy {
+		url = "https://github.com/MartinSVK12"
+		patternLayout {
+			artifact "[organisation]/releases/download/[revision]/[module]-[revision].jar"
+			m2compatible = true
+		}
+		metadataSources { artifact() }
+	}
 }
 
 dependencies {
@@ -62,9 +78,7 @@ dependencies {
 	// Helper library
 	modImplementation "bta-halplibe:halplibe:${project.halplibe_version}"
 
-	modImplementation("com.github.MartinSVK12:sunsetutils:main-SNAPSHOT"){
-		exclude(group: 'objects', module: 'client')
-	}
+	modImplementation "sunsetutils:sunsetutils:1.6.1"
 
 	modImplementation "org.slf4j:slf4j-api:1.8.0-beta4"
 	modImplementation "org.apache.logging.log4j:log4j-slf4j18-impl:2.16.0"
