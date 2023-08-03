@@ -1,8 +1,9 @@
 package sunsetsatellite.energyapi.interfaces.mixins;
 
-import net.minecraft.src.Container;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.IInventory;
+
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.core.player.inventory.Container;
+import net.minecraft.core.player.inventory.IInventory;
 
 public interface IEntityPlayerMP {
     void displayGuiScreen_energyapi(GuiScreen guiScreen, Container container, IInventory inventory);

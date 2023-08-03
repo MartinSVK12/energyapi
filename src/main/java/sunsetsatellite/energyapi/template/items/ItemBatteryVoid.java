@@ -1,11 +1,12 @@
 package sunsetsatellite.energyapi.template.items;
 
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.StringTranslate;
-import net.minecraft.src.command.ChatColor;
+
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.lang.I18n;
+import net.minecraft.core.net.command.TextFormatting;
+import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
-import sunsetsatellite.energyapi.util.Config;
-import sunsetsatellite.energyapi.util.ICustomDescription;
+import sunsetsatellite.sunsetutils.util.ICustomDescription;
 
 public class ItemBatteryVoid extends ItemEnergyContainer implements ICustomDescription {
     public ItemBatteryVoid(int i) {
@@ -23,8 +24,8 @@ public class ItemBatteryVoid extends ItemEnergyContainer implements ICustomDescr
     @Override
     public String getDescription(ItemStack stack) {
         StringBuilder text = new StringBuilder();
-        StringTranslate trans = StringTranslate.getInstance();
+        I18n trans = I18n.getInstance();
         ItemEnergyContainer item = (ItemEnergyContainer) stack.getItem();
-        return text.append(ChatColor.white).append(Config.getFromConfig("energyName","Energy")).append(": ").append(ChatColor.gray).append("No").append(ChatColor.lightGray).append(" ").append(Config.getFromConfig("energySuffix","E")).append("\n").append(ChatColor.white).append("Max Transfer: ").append(ChatColor.magenta).append("Yes").append(ChatColor.lightGray).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" IN ").append("| ").append(ChatColor.gray).append("No").append(ChatColor.lightGray).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" OUT").toString();
+        return text.append(TextFormatting.WHITE).append(EnergyAPI.ENERGY_NAME).append(": ").append(TextFormatting.GRAY).append("No").append(TextFormatting.LIGHT_GRAY).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append("\n").append(TextFormatting.WHITE).append("Max Transfer: ").append(TextFormatting.MAGENTA).append("Yes").append(TextFormatting.LIGHT_GRAY).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append(" IN ").append("| ").append(TextFormatting.GRAY).append("No").append(TextFormatting.LIGHT_GRAY).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append(" OUT").toString();
     }
 }

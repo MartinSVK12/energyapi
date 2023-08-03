@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "entrypoints": {
+      "main": [
+        "sunsetsatellite.energyapi.EnergyAPI"
+      ]
+    },
+    "group": "sunsetsatellite",
+    "id":"energyapi",
+    "version": "1.1.3",
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "metadata": {
+      "name": "EnergyAPI",
+      "description": "API for energy related processes for BTA.",
+      "contact": {
+        "homepage": "https://github.com/MartinSVK12/energyapi",
+        "sources": "https://github.com/MartinSVK12/energyapi",
+        "issues": "https://github.com/MartinSVK12/energyapi"
+      },
+      "license": "MIT",
+      "contributors": {
+        "MartinSVK12": "Author"
+      },
+      "icon": "icon.png"
+    }
+  },
+  "mixin": [
+    "energyapi.mixins.json"
+  ]
+}

@@ -1,5 +1,6 @@
 package sunsetsatellite.energyapi.api;
 
+
 import sunsetsatellite.sunsetutils.util.Connection;
 import sunsetsatellite.sunsetutils.util.Direction;
 

@@ -1,6 +1,11 @@
 package sunsetsatellite.energyapi.template.containers;
 
-import net.minecraft.src.*;
+
+import net.minecraft.core.crafting.ICrafting;
+import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.IInventory;
+import net.minecraft.core.player.inventory.slot.Slot;
 import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 
 import java.util.Iterator;
@@ -65,11 +70,6 @@ public class ContainerGenerator extends ContainerEnergy {
         if (id == 3) {
             ((TileEntityGenerator)tile).maxBurnTime = value;
         }
-
-    }
-
-    @Override
-    public void quickMoveItems(int i, EntityPlayer entityPlayer, boolean bl, boolean bl2) {
 
     }
 

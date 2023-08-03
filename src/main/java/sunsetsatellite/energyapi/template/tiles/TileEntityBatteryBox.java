@@ -1,18 +1,15 @@
 package sunsetsatellite.energyapi.template.tiles;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
-import sunsetsatellite.energyapi.EnergyAPI;
-import sunsetsatellite.energyapi.api.IEnergySink;
+
+import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.ListTag;
+import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.IInventory;
 import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
 import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
-import sunsetsatellite.energyapi.impl.TileEntityEnergySink;
-import sunsetsatellite.energyapi.template.items.ItemBatteryUnlimited;
-import sunsetsatellite.energyapi.template.items.ItemBatteryVoid;
 import sunsetsatellite.sunsetutils.util.Connection;
 import sunsetsatellite.sunsetutils.util.Direction;
-
-import java.util.ArrayList;
 
 public class TileEntityBatteryBox extends TileEntityEnergyConductor
     implements IInventory {
@@ -22,7 +19,7 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
         setTransfer(250);
         contents = new ItemStack[2];
         for (Direction dir : Direction.values()) {
-            setConnection(dir,Connection.OUTPUT);
+            setConnection(dir, Connection.OUTPUT);
         }
         setConnection(Direction.Y_POS,Connection.INPUT);
     }
@@ -106,38 +103,38 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
         return "Battery Box";
     }
 
-    public void readFromNBT(NBTTagCompound nbttagcompound)
+    public void readFromNBT(CompoundTag CompoundTag)
     {
-        super.readFromNBT(nbttagcompound);
-        NBTTagList nbttaglist = nbttagcompound.getTagList("Items");
+        super.readFromNBT(CompoundTag);
+        ListTag ListTag = CompoundTag.getList("Items");
         contents = new ItemStack[getSizeInventory()];
-        for(int i = 0; i < nbttaglist.tagCount(); i++)
+        for(int i = 0; i < ListTag.tagCount(); i++)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            int j = nbttagcompound1.getByte("Slot") & 0xff;
+            CompoundTag CompoundTag1 = (CompoundTag)ListTag.tagAt(i);
+            int j = CompoundTag1.getByte("Slot") & 0xff;
             if(j < contents.length)
             {
-                contents[j] = new ItemStack(nbttagcompound1);
+                contents[j] = ItemStack.readItemStackFromNbt(CompoundTag1);
             }
         }
     }
 
-    public void writeToNBT(NBTTagCompound nbttagcompound)
+    public void writeToNBT(CompoundTag CompoundTag)
     {
-        super.writeToNBT(nbttagcompound);
-        NBTTagList nbttaglist = new NBTTagList();
+        super.writeToNBT(CompoundTag);
+        ListTag ListTag = new ListTag();
         for(int i = 0; i < contents.length; i++)
         {
             if(contents[i] != null)
             {
 
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte)i);
-                contents[i].writeToNBT(nbttagcompound1);
-                nbttaglist.setTag(nbttagcompound1);
+                CompoundTag CompoundTag1 = new CompoundTag();
+                CompoundTag1.putByte("Slot", (byte)i);
+                contents[i].writeToNBT(CompoundTag1);
+                ListTag.addTag(CompoundTag1);
             }
         }
-        nbttagcompound.setTag("Items", nbttaglist);
+        CompoundTag.put("Items", ListTag);
     }
 
     public int getInventoryStackLimit()
@@ -151,7 +148,7 @@ public class TileEntityBatteryBox extends TileEntityEnergyConductor
         {
             return false;
         }
-        return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
+        return entityplayer.distanceToSqr((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
     }
 
     private ItemStack[] contents;

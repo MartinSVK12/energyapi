@@ -1,7 +1,8 @@
 package sunsetsatellite.energyapi.mp.packets;
 
-import net.minecraft.src.NetHandler;
-import net.minecraft.src.Packet;
+
+import net.minecraft.core.net.handler.NetHandler;
+import net.minecraft.core.net.packet.Packet;
 import sunsetsatellite.energyapi.interfaces.mixins.INetClientHandler;
 
 import java.io.DataInputStream;

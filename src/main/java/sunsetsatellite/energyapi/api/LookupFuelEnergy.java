@@ -1,7 +1,8 @@
 package sunsetsatellite.energyapi.api;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
+
+import net.minecraft.core.block.Block;
+import net.minecraft.core.item.Item;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,47 +16,47 @@ public class LookupFuelEnergy {
     }
 
     protected LookupFuelEnergy() {
-        this.addFuelEntry(Block.planksOak.blockID, 3);
-        this.addFuelEntry(Block.planksOakPainted.blockID, 3);
-        this.addFuelEntry(Block.stairsPlanksOak.blockID, 3);
-        this.addFuelEntry(Block.slabPlanksOak.blockID, 1);
-        this.addFuelEntry(Block.slabPlanksOakPainted.blockID, 1);
-        this.addFuelEntry(Block.fencePlanksOak.blockID, 3);
-        this.addFuelEntry(Block.fencePlanksOakPainted.blockID, 3);
-        this.addFuelEntry(Block.fencegatePlanksOak.blockID, 3);
-        this.addFuelEntry(Block.fencegatePlanksOakPainted.blockID, 3);
-        this.addFuelEntry(Block.logOak.blockID, 3);
-        this.addFuelEntry(Block.logBirch.blockID, 3);
-        this.addFuelEntry(Block.logPine.blockID, 3);
-        this.addFuelEntry(Block.logCherry.blockID, 3);
-        this.addFuelEntry(Block.logOakMossy.blockID, 3);
-        this.addFuelEntry(Block.logEucalyptus.blockID, 3);
-        this.addFuelEntry(Block.saplingOak.blockID, 1);
-        this.addFuelEntry(Block.saplingPine.blockID, 1);
-        this.addFuelEntry(Block.saplingBirch.blockID, 1);
-        this.addFuelEntry(Block.saplingCherry.blockID, 1);
-        this.addFuelEntry(Block.saplingEucalyptus.blockID, 1);
-        this.addFuelEntry(Block.saplingShrub.blockID, 1);
-        this.addFuelEntry(Block.saplingOakRetro.blockID, 1);
-        this.addFuelEntry(Block.deadbush.blockID, 1);
-        this.addFuelEntry(Block.spinifex.blockID, 1);
-        this.addFuelEntry(Block.blockCoal.blockID, 64);
-        this.addFuelEntry(Block.blockCharcoal.blockID, 64);
-        this.addFuelEntry(Block.blockNetherCoal.blockID, 128);
-        this.addFuelEntry(Item.stick.itemID, 1);
-        this.addFuelEntry(Item.toolPickaxeWood.itemID, 5);
-        this.addFuelEntry(Item.toolSwordWood.itemID, 5);
-        this.addFuelEntry(Item.toolAxeWood.itemID, 5);
-        this.addFuelEntry(Item.toolShovelWood.itemID, 5);
-        this.addFuelEntry(Item.toolHoeWood.itemID, 5);
-        this.addFuelEntry(Item.toolBow.itemID, 3);
-        this.addFuelEntry(Item.toolFishingrod.itemID, 3);
-        this.addFuelEntry(Item.boat.itemID, 3);
-        this.addFuelEntry(Item.doorOak.itemID, 3);
-        this.addFuelEntry(Item.sign.itemID, 3);
-        this.addFuelEntry(Item.bowl.itemID, 3);
-        this.addFuelEntry(Item.coal.itemID, 8);
-        this.addFuelEntry(Item.nethercoal.itemID, 16);
+        this.addFuelEntry(Block.planksOak.id, 3);
+        this.addFuelEntry(Block.planksOakPainted.id, 3);
+        this.addFuelEntry(Block.stairsPlanksOak.id, 3);
+        this.addFuelEntry(Block.slabPlanksOak.id, 1);
+        this.addFuelEntry(Block.slabPlanksOakPainted.id, 1);
+        this.addFuelEntry(Block.fencePlanksOak.id, 3);
+        this.addFuelEntry(Block.fencePlanksOakPainted.id, 3);
+        this.addFuelEntry(Block.fencegatePlanksOak.id, 3);
+        this.addFuelEntry(Block.fencegatePlanksOakPainted.id, 3);
+        this.addFuelEntry(Block.logOak.id, 3);
+        this.addFuelEntry(Block.logBirch.id, 3);
+        this.addFuelEntry(Block.logPine.id, 3);
+        this.addFuelEntry(Block.logCherry.id, 3);
+        this.addFuelEntry(Block.logOakMossy.id, 3);
+        this.addFuelEntry(Block.logEucalyptus.id, 3);
+        this.addFuelEntry(Block.saplingOak.id, 1);
+        this.addFuelEntry(Block.saplingPine.id, 1);
+        this.addFuelEntry(Block.saplingBirch.id, 1);
+        this.addFuelEntry(Block.saplingCherry.id, 1);
+        this.addFuelEntry(Block.saplingEucalyptus.id, 1);
+        this.addFuelEntry(Block.saplingShrub.id, 1);
+        this.addFuelEntry(Block.saplingOakRetro.id, 1);
+        this.addFuelEntry(Block.deadbush.id, 1);
+        this.addFuelEntry(Block.spinifex.id, 1);
+        this.addFuelEntry(Block.blockCoal.id, 64);
+        this.addFuelEntry(Block.blockCharcoal.id, 64);
+        this.addFuelEntry(Block.blockNetherCoal.id, 128);
+        this.addFuelEntry(Item.stick.id, 1);
+        this.addFuelEntry(Item.toolPickaxeWood.id, 5);
+        this.addFuelEntry(Item.toolSwordWood.id, 5);
+        this.addFuelEntry(Item.toolAxeWood.id, 5);
+        this.addFuelEntry(Item.toolShovelWood.id, 5);
+        this.addFuelEntry(Item.toolHoeWood.id, 5);
+        this.addFuelEntry(Item.toolBow.id, 3);
+        this.addFuelEntry(Item.toolFishingrod.id, 3);
+        this.addFuelEntry(Item.boat.id, 3);
+        this.addFuelEntry(Item.doorOak.id, 3);
+        this.addFuelEntry(Item.sign.id, 3);
+        this.addFuelEntry(Item.bowl.id, 3);
+        this.addFuelEntry(Item.coal.id, 8);
+        this.addFuelEntry(Item.nethercoal.id, 16);
     }
 
     public void addFuelEntry(int id, int energyYield) {

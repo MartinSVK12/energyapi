@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityPlayerMPMixin",
-    "GuiContainerMixin",
+    "MinecraftMixin",
     "NetClientHandlerMixin",
     "PacketAccessor",
     "RenderBlocksMixin"

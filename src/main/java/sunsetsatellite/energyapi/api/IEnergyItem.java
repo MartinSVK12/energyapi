@@ -1,6 +1,7 @@
 package sunsetsatellite.energyapi.api;
 
-import net.minecraft.src.ItemStack;
+
+import net.minecraft.core.item.ItemStack;
 
 public interface IEnergyItem {
 

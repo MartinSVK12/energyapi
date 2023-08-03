@@ -1,11 +1,17 @@
 package sunsetsatellite.energyapi.template.containers;
 
-import net.minecraft.src.*;
+
+import net.minecraft.core.InventoryAction;
+import net.minecraft.core.block.entity.TileEntity;
+import net.minecraft.core.crafting.ICrafting;
+import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.Container;
+import net.minecraft.core.player.inventory.slot.Slot;
 import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
 import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayerMP;
-import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 
-import java.util.Iterator;
+import java.util.List;
 
 public class ContainerEnergy extends Container {
 
@@ -20,11 +26,6 @@ public class ContainerEnergy extends Container {
         ((TileEntityEnergyConductor)tile).capacity = capacity;
         ((TileEntityEnergyConductor)tile).maxProvide = maxProvide;
         ((TileEntityEnergyConductor)tile).maxReceive = maxReceive;
-    }
-
-    @Override
-    public void quickMoveItems(int i, EntityPlayer entityPlayer, boolean bl, boolean bl2) {
-
     }
 
     @Override
@@ -47,6 +48,16 @@ public class ContainerEnergy extends Container {
         this.capacity = ((TileEntityEnergyConductor)tile).capacity;
         this.maxProvide = ((TileEntityEnergyConductor)tile).maxProvide;
         this.maxReceive = ((TileEntityEnergyConductor)tile).maxReceive;
+    }
+
+    @Override
+    public List<Integer> getMoveSlots(InventoryAction inventoryAction, Slot slot, int i, EntityPlayer entityPlayer) {
+        return null;
+    }
+
+    @Override
+    public List<Integer> getTargetSlots(InventoryAction inventoryAction, Slot slot, int i, EntityPlayer entityPlayer) {
+        return null;
     }
 
     @Override

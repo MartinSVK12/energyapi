@@ -1,12 +1,12 @@
 package sunsetsatellite.energyapi.template.items;
 
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.StringTranslate;
-import net.minecraft.src.command.ChatColor;
+
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.lang.I18n;
+import net.minecraft.core.net.command.TextFormatting;
 import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
-import sunsetsatellite.energyapi.util.Config;
-import sunsetsatellite.energyapi.util.ICustomDescription;
+import sunsetsatellite.sunsetutils.util.ICustomDescription;
 
 public class ItemBattery extends ItemEnergyContainer implements ICustomDescription {
     public ItemBattery(int i) {
@@ -28,9 +28,9 @@ public class ItemBattery extends ItemEnergyContainer implements ICustomDescripti
     @Override
     public String getDescription(ItemStack stack) {
         StringBuilder text = new StringBuilder();
-        StringTranslate trans = StringTranslate.getInstance();
+        I18n trans = I18n.getInstance();
         ItemEnergyContainer item = (ItemEnergyContainer) stack.getItem();
-        return text.append(ChatColor.white).append(Config.getFromConfig("energyName","Energy")).append(": ").append(ChatColor.lightGray).append(item.getEnergy(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append("/").append(item.getCapacity(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append("\n").append(ChatColor.white).append("Max Transfer: ").append(ChatColor.lightGray).append(item.getMaxReceive(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" IN ").append("| ").append(item.getMaxProvide(stack)).append(" ").append(Config.getFromConfig("energySuffix","E")).append(" OUT").toString();
+        return text.append(TextFormatting.WHITE).append(EnergyAPI.ENERGY_NAME).append(": ").append(TextFormatting.LIGHT_GRAY).append(item.getEnergy(stack)).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append("/").append(item.getCapacity(stack)).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append("\n").append(TextFormatting.WHITE).append("Max Transfer: ").append(TextFormatting.LIGHT_GRAY).append(item.getMaxReceive(stack)).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append(" IN ").append("| ").append(item.getMaxProvide(stack)).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append(" OUT").toString();
 
     }
 }

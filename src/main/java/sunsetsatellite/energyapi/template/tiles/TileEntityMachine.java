@@ -1,6 +1,12 @@
 package sunsetsatellite.energyapi.template.tiles;
 
-import net.minecraft.src.*;
+
+import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.ListTag;
+import net.minecraft.core.crafting.recipe.RecipesFurnace;
+import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.IInventory;
 import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
 import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
 import sunsetsatellite.sunsetutils.util.Connection;
@@ -14,7 +20,7 @@ public class TileEntityMachine extends TileEntityEnergyConductor
         setTransfer(250);
         contents = new ItemStack[3];
         for (Direction dir : Direction.values()) {
-            setConnection(dir,Connection.INPUT);
+            setConnection(dir, Connection.INPUT);
         }
     }
 
@@ -98,43 +104,43 @@ public class TileEntityMachine extends TileEntityEnergyConductor
         return "Energy Machine";
     }
 
-    public void readFromNBT(NBTTagCompound nbttagcompound)
+    public void readFromNBT(CompoundTag CompoundTag)
     {
-        super.readFromNBT(nbttagcompound);
-        NBTTagList nbttaglist = nbttagcompound.getTagList("Items");
+        super.readFromNBT(CompoundTag);
+        ListTag ListTag = CompoundTag.getList("Items");
         contents = new ItemStack[getSizeInventory()];
-        for(int i = 0; i < nbttaglist.tagCount(); i++)
+        for(int i = 0; i < ListTag.tagCount(); i++)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            int j = nbttagcompound1.getByte("Slot") & 0xff;
+            CompoundTag CompoundTag1 = (CompoundTag)ListTag.tagAt(i);
+            int j = CompoundTag1.getByte("Slot") & 0xff;
             if(j < contents.length)
             {
-                contents[j] = new ItemStack(nbttagcompound1);
+                contents[j] = ItemStack.readItemStackFromNbt(CompoundTag1);
             }
         }
-        this.currentCookTime = nbttagcompound.getInteger("CookTime");
-        this.maxCookTime = nbttagcompound.getInteger("MaxCookTime");
+        this.currentCookTime = CompoundTag.getInteger("CookTime");
+        this.maxCookTime = CompoundTag.getInteger("MaxCookTime");
     }
 
 
-    public void writeToNBT(NBTTagCompound nbttagcompound)
+    public void writeToNBT(CompoundTag CompoundTag)
     {
-        super.writeToNBT(nbttagcompound);
-        NBTTagList nbttaglist = new NBTTagList();
+        super.writeToNBT(CompoundTag);
+        ListTag ListTag = new ListTag();
         for(int i = 0; i < contents.length; i++)
         {
             if(contents[i] != null)
             {
 
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte)i);
-                contents[i].writeToNBT(nbttagcompound1);
-                nbttaglist.setTag(nbttagcompound1);
+                CompoundTag CompoundTag1 = new CompoundTag();
+                CompoundTag1.putByte("Slot", (byte)i);
+                contents[i].writeToNBT(CompoundTag1);
+                ListTag.addTag(CompoundTag1);
             }
         }
-        nbttagcompound.setTag("Items", nbttaglist);
-        nbttagcompound.setInteger("CookTime", (short)this.currentCookTime);
-        nbttagcompound.setInteger("MaxCookTime", (short)this.maxCookTime);
+        CompoundTag.put("Items", ListTag);
+        CompoundTag.putInt("CookTime", (short)this.currentCookTime);
+        CompoundTag.putInt("MaxCookTime", (short)this.maxCookTime);
     }
 
     public int getInventoryStackLimit()
@@ -148,7 +154,7 @@ public class TileEntityMachine extends TileEntityEnergyConductor
         {
             return false;
         }
-        return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
+        return entityplayer.distanceToSqr((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
     }
 
 
@@ -160,7 +166,7 @@ public class TileEntityMachine extends TileEntityEnergyConductor
         if (this.contents[0] == null) {
             return false;
         } else {
-            ItemStack itemstack = RecipesFurnace.smelting().getSmeltingResult(this.contents[0].getItem().itemID);
+            ItemStack itemstack = RecipesFurnace.smelting().getSmeltingResult(this.contents[0].getItem().id);
             if (itemstack == null) {
                 return false;
             } else if (this.contents[2] == null) {
@@ -177,7 +183,7 @@ public class TileEntityMachine extends TileEntityEnergyConductor
 
     public void smeltItem() {
         if (this.canSmelt()) {
-            ItemStack itemstack = RecipesFurnace.smelting().getSmeltingResult(this.contents[0].getItem().itemID);
+            ItemStack itemstack = RecipesFurnace.smelting().getSmeltingResult(this.contents[0].getItem().id);
             if (this.contents[2] == null) {
                 this.contents[2] = itemstack.copy();
             } else if (this.contents[2].itemID == itemstack.itemID) {

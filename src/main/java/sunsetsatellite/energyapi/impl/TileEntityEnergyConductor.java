@@ -1,9 +1,9 @@
 package sunsetsatellite.energyapi.impl;
 
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
+
+import com.mojang.nbt.CompoundTag;
+import net.minecraft.core.block.entity.TileEntity;
+import net.minecraft.core.item.ItemStack;
 import sunsetsatellite.energyapi.api.IEnergySink;
 import sunsetsatellite.energyapi.api.IEnergySource;
 import sunsetsatellite.sunsetutils.util.Connection;
@@ -15,7 +15,7 @@ public class TileEntityEnergyConductor extends TileEntityEnergy implements IEner
 
     @Override
     public int receive(Direction dir, int amount, boolean test) {
-        if(canConnect(dir,Connection.INPUT)){
+        if(canConnect(dir, Connection.INPUT)){
             int received = Math.min(this.capacity - this.energy, Math.min(this.maxReceive, amount));
             if(!test){
                 energy += received;
@@ -104,17 +104,17 @@ public class TileEntityEnergyConductor extends TileEntityEnergy implements IEner
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound) {
-        nbttagcompound.setInteger("maxReceive",maxReceive);
-        nbttagcompound.setInteger("maxProvide",maxProvide);
-        super.writeToNBT(nbttagcompound);
+    public void writeToNBT(CompoundTag CompoundTag) {
+        CompoundTag.putInt("maxReceive",maxReceive);
+        CompoundTag.putInt("maxProvide",maxProvide);
+        super.writeToNBT(CompoundTag);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbttagcompound) {
-        maxReceive = nbttagcompound.getInteger("maxReceive");
-        maxProvide = nbttagcompound.getInteger("maxProvide");
-        super.readFromNBT(nbttagcompound);
+    public void readFromNBT(CompoundTag CompoundTag) {
+        maxReceive = CompoundTag.getInteger("maxReceive");
+        maxProvide = CompoundTag.getInteger("maxProvide");
+        super.readFromNBT(CompoundTag);
     }
 
     public void setTransfer(int amount){

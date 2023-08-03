@@ -1,6 +1,10 @@
 package sunsetsatellite.energyapi.template.containers;
 
-import net.minecraft.src.*;
+
+import net.minecraft.core.crafting.ICrafting;
+import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.player.inventory.IInventory;
+import net.minecraft.core.player.inventory.slot.Slot;
 import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 
 import java.util.Iterator;
@@ -67,10 +71,6 @@ public class ContainerMachine extends ContainerEnergy {
 
     }
 
-    @Override
-    public void quickMoveItems(int i, EntityPlayer entityPlayer, boolean bl, boolean bl2) {
-
-    }
 
     @Override
     public boolean isUsableByPlayer(EntityPlayer entityPlayer1) {

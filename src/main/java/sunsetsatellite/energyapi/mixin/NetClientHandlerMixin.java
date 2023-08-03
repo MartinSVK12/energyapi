@@ -1,7 +1,12 @@
 package sunsetsatellite.energyapi.mixin;
 
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.net.handler.NetClientHandler;
+import net.minecraft.core.block.entity.TileEntity;
+import net.minecraft.core.net.handler.NetHandler;
+import net.minecraft.core.net.packet.Packet100OpenWindow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +16,6 @@ import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.interfaces.mixins.INetClientHandler;
 import sunsetsatellite.energyapi.mp.packets.PacketUpdateEnergy;
 import sunsetsatellite.energyapi.template.containers.ContainerEnergy;
-import sunsetsatellite.energyapi.util.Config;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -21,14 +25,15 @@ import java.lang.reflect.InvocationTargetException;
 )
 public class NetClientHandlerMixin extends NetHandler implements INetClientHandler {
 
-    @Shadow private Minecraft mc;
+    @Shadow
+    private Minecraft mc;
 
     @Inject(
             method = "handleOpenWindow",
             at = @At("TAIL")
     )
     public void handleOpenWindow(Packet100OpenWindow packet100openwindow, CallbackInfo ci) {
-        if(packet100openwindow.inventoryType == Config.getFromConfig("GuiID",7)){
+        if(packet100openwindow.inventoryType == EnergyAPI.config.getFromConfig("GuiID",7)){
             TileEntity tile;
             try {
                 tile = (TileEntity) EnergyAPI.nameToGuiMap.get(packet100openwindow.windowTitle).get(1).getDeclaredConstructor().newInstance();

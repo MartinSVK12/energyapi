@@ -1,17 +1,15 @@
 package sunsetsatellite.energyapi.template.gui;
 
-import net.minecraft.src.ContainerPlayer;
-import net.minecraft.src.GuiContainer;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.StringTranslate;
+
+import net.minecraft.client.gui.GuiContainer;
+import net.minecraft.client.gui.GuiTooltip;
+import net.minecraft.core.lang.I18n;
+import net.minecraft.core.player.inventory.InventoryPlayer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import sunsetsatellite.energyapi.EnergyAPI;
-import sunsetsatellite.energyapi.template.containers.ContainerBatteryBox;
 import sunsetsatellite.energyapi.template.containers.ContainerGenerator;
-import sunsetsatellite.energyapi.template.tiles.TileEntityBatteryBox;
 import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
-import sunsetsatellite.energyapi.util.Config;
 
 public class GuiGenerator extends GuiContainer {
 
@@ -40,7 +38,7 @@ public class GuiGenerator extends GuiContainer {
         Color c = new Color();
         c.fromHSB((float) color_mapped,1.0F,1.0F);
         color = c.getAlpha() << 24 | c.getRed() << 16 | c.getBlue() << 8 | c.getGreen();
-        drawRectBetter(x+80,y+40, (int) x_mapped,7,color);
+        drawRectWidthHeight(x+80,y+40, (int) x_mapped,7,color);
         GL11.glEnable(3553);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         j = (this.width - this.xSize) / 2;
@@ -56,12 +54,14 @@ public class GuiGenerator extends GuiContainer {
         int i = (width - xSize) / 2;
         int j = (height - ySize) / 2;
         super.drawScreen(x, y, renderPartialTicks);
-        StringTranslate trans = StringTranslate.getInstance();
+        I18n trans = I18n.getInstance();
         StringBuilder text = new StringBuilder();
         if(x > i+80 && x < i+94){
             if(y > j+40 && y < j+46){
-                text.append(Config.getFromConfig("energyName","Energy")).append(": ").append(tile.energy).append(" ").append(Config.getFromConfig("energySuffix","E")).append("/").append(tile.capacity).append(" ").append(Config.getFromConfig("energySuffix","E"));
-                this.drawTooltip(text.toString(),x,y,8,-8,true);
+                text.append(EnergyAPI.ENERGY_NAME).append(": ").append(tile.energy).append(" ").append(EnergyAPI.ENERGY_SUFFIX).append("/").append(tile.capacity).append(" ").append(EnergyAPI.ENERGY_SUFFIX);
+                GuiTooltip tooltip = new GuiTooltip(mc);
+                tooltip.render(text.toString(),x,y,8,-8);
+                //this.drawTooltip(text.toString(),x,y,8,-8,true);
             }
         }
     }

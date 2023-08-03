@@ -1,14 +1,11 @@
 package sunsetsatellite.energyapi.impl;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
+
+import com.mojang.nbt.CompoundTag;
+import net.minecraft.core.block.Block;
+import net.minecraft.core.block.entity.TileEntity;
 import sunsetsatellite.energyapi.api.IEnergy;
-import sunsetsatellite.energyapi.util.*;
-import sunsetsatellite.sunsetutils.util.Connection;
-import sunsetsatellite.sunsetutils.util.Direction;
-import sunsetsatellite.sunsetutils.util.TickTimer;
-import sunsetsatellite.sunsetutils.util.Vec3i;
+import sunsetsatellite.sunsetutils.util.*;
 
 import java.util.HashMap;
 
@@ -21,13 +18,9 @@ public class TileEntityEnergy extends TileEntity implements IEnergy {
     public HashMap<Direction, Connection> connections = new HashMap<>();
 
     public TileEntityEnergy(){
-        try {
-            this.lastTransferMemory = new TickTimer(this,this.getClass().getMethod("clearLastTransfers"),10,true);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+        this.lastTransferMemory = new TickTimer(this,"clearLastTransfers",10,true);
         for (Direction dir : Direction.values()) {
-            connections.put(dir,Connection.NONE);
+            connections.put(dir, Connection.NONE);
         }
     }
 
@@ -55,17 +48,17 @@ public class TileEntityEnergy extends TileEntity implements IEnergy {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound) {
-        nbttagcompound.setInteger("energy",energy);
-        nbttagcompound.setInteger("capacity",capacity);
-        super.writeToNBT(nbttagcompound);
+    public void writeToNBT(CompoundTag CompoundTag) {
+        CompoundTag.putInt("energy",energy);
+        CompoundTag.putInt("capacity",capacity);
+        super.writeToNBT(CompoundTag);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbttagcompound) {
-        energy = nbttagcompound.getInteger("energy");
-        capacity = nbttagcompound.getInteger("capacity");
-        super.readFromNBT(nbttagcompound);
+    public void readFromNBT(CompoundTag CompoundTag) {
+        energy = CompoundTag.getInteger("energy");
+        capacity = CompoundTag.getInteger("capacity");
+        super.readFromNBT(CompoundTag);
     }
 
     @Override

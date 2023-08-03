@@ -1,7 +1,8 @@
 package sunsetsatellite.energyapi.impl;
 
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
+
+import com.mojang.nbt.CompoundTag;
+import net.minecraft.core.item.ItemStack;
 import sunsetsatellite.energyapi.api.IEnergySource;
 import sunsetsatellite.sunsetutils.util.Connection;
 import sunsetsatellite.sunsetutils.util.Direction;
@@ -55,14 +56,14 @@ public class TileEntityEnergySource extends TileEntityEnergy implements IEnergyS
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound) {
-        nbttagcompound.setInteger("maxProvide",maxProvide);
-        super.writeToNBT(nbttagcompound);
+    public void writeToNBT(CompoundTag CompoundTag) {
+        CompoundTag.putInt("maxProvide",maxProvide);
+        super.writeToNBT(CompoundTag);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbttagcompound) {
-        maxProvide = nbttagcompound.getInteger("maxProvide");
-        super.readFromNBT(nbttagcompound);
+    public void readFromNBT(CompoundTag CompoundTag) {
+        maxProvide = CompoundTag.getInteger("maxProvide");
+        super.readFromNBT(CompoundTag);
     }
 }

@@ -1,8 +1,9 @@
 package sunsetsatellite.energyapi.mixin;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.RenderBlocks;
+
+import net.minecraft.client.render.RenderBlocks;
+import net.minecraft.core.block.Block;
+import net.minecraft.core.world.WorldSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,16 +18,17 @@ import sunsetsatellite.energyapi.util.RenderWire;
 )
 
 public class RenderBlocksMixin {
-    @Shadow private IBlockAccess blockAccess;
+    @Shadow
+    private WorldSource blockAccess;
 
     @Inject(
             method = "renderBlockByRenderType",
-            at = @At("TAIL"),
+            at = @At("HEAD"),
             cancellable = true
     )
-    void renderBlockByRenderType(Block block, int i, int j, int k, CallbackInfoReturnable<Boolean> cir) {
-        if(block.blockID == EnergyAPI.wire.blockID){
-            cir.setReturnValue(RenderWire.render((RenderBlocks) ((Object)this),this.blockAccess,i,j,k,block,0));
+    void renderBlockByRenderType(Block block, int renderType, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
+        if(EnergyAPI.wire != null && block.id == EnergyAPI.wire.id){
+            cir.setReturnValue(RenderWire.render((RenderBlocks) ((Object)this),this.blockAccess,x,y,z,block,0));
         }
     }
 }

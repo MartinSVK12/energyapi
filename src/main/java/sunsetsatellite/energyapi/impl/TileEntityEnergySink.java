@@ -1,7 +1,8 @@
 package sunsetsatellite.energyapi.impl;
 
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
+
+import com.mojang.nbt.CompoundTag;
+import net.minecraft.core.item.ItemStack;
 import sunsetsatellite.energyapi.api.IEnergySink;
 import sunsetsatellite.sunsetutils.util.Connection;
 import sunsetsatellite.sunsetutils.util.Direction;
@@ -43,15 +44,15 @@ public class TileEntityEnergySink extends TileEntityEnergy implements IEnergySin
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound) {
-        nbttagcompound.setInteger("maxReceive",maxReceive);
-        super.writeToNBT(nbttagcompound);
+    public void writeToNBT(CompoundTag CompoundTag) {
+        CompoundTag.putInt("maxReceive",maxReceive);
+        super.writeToNBT(CompoundTag);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbttagcompound) {
-        maxReceive = nbttagcompound.getInteger("maxReceive");
-        super.readFromNBT(nbttagcompound);
+    public void readFromNBT(CompoundTag CompoundTag) {
+        maxReceive = CompoundTag.getInteger("maxReceive");
+        super.readFromNBT(CompoundTag);
     }
 
     @Override

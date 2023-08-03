@@ -1,10 +1,15 @@
 package sunsetsatellite.energyapi.template.tiles;
 
-import net.minecraft.src.*;
-import sunsetsatellite.energyapi.EnergyAPI;
-import sunsetsatellite.energyapi.api.IEnergySink;
+
+import com.mojang.nbt.CompoundTag;
+import com.mojang.nbt.ListTag;
+import net.minecraft.core.crafting.LookupFuelFurnace;
+import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.IInventory;
 import sunsetsatellite.energyapi.api.LookupFuelEnergy;
-import sunsetsatellite.energyapi.impl.*;
+import sunsetsatellite.energyapi.impl.ItemEnergyContainer;
+import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
 import sunsetsatellite.sunsetutils.util.Connection;
 import sunsetsatellite.sunsetutils.util.Direction;
 
@@ -16,7 +21,7 @@ public class TileEntityGenerator extends TileEntityEnergyConductor
         setTransfer(250);
         contents = new ItemStack[3];
         for (Direction dir : Direction.values()) {
-            setConnection(dir,Connection.OUTPUT);
+            setConnection(dir, Connection.OUTPUT);
         }
     }
 
@@ -115,49 +120,49 @@ public class TileEntityGenerator extends TileEntityEnergyConductor
         return "Generator";
     }
 
-    public void readFromNBT(NBTTagCompound nbttagcompound)
+    public void readFromNBT(CompoundTag CompoundTag)
     {
-        super.readFromNBT(nbttagcompound);
-        NBTTagList nbttaglist = nbttagcompound.getTagList("Items");
+        super.readFromNBT(CompoundTag);
+        ListTag ListTag = CompoundTag.getList("Items");
         contents = new ItemStack[getSizeInventory()];
-        for(int i = 0; i < nbttaglist.tagCount(); i++)
+        for(int i = 0; i < ListTag.tagCount(); i++)
         {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-            int j = nbttagcompound1.getByte("Slot") & 0xff;
+            CompoundTag CompoundTag1 = (CompoundTag)ListTag.tagAt(i);
+            int j = CompoundTag1.getByte("Slot") & 0xff;
             if(j < contents.length)
             {
-                contents[j] = new ItemStack(nbttagcompound1);
+                contents[j] = ItemStack.readItemStackFromNbt(CompoundTag1);
             }
         }
-        this.currentBurnTime = nbttagcompound.getInteger("BurnTime");
-        this.maxBurnTime = nbttagcompound.getInteger("MaxBurnTime");
-        currentFuel = new ItemStack(nbttagcompound.getCompoundTag("CurrentFuel"));
+        this.currentBurnTime = CompoundTag.getInteger("BurnTime");
+        this.maxBurnTime = CompoundTag.getInteger("MaxBurnTime");
+        currentFuel = ItemStack.readItemStackFromNbt(CompoundTag.getCompound("CurrentFuel"));
     }
 
 
-    public void writeToNBT(NBTTagCompound nbttagcompound)
+    public void writeToNBT(CompoundTag CompoundTag)
     {
-        super.writeToNBT(nbttagcompound);
-        NBTTagList nbttaglist = new NBTTagList();
+        super.writeToNBT(CompoundTag);
+        ListTag ListTag = new ListTag();
         for(int i = 0; i < contents.length; i++)
         {
             if(contents[i] != null)
             {
 
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte)i);
-                contents[i].writeToNBT(nbttagcompound1);
-                nbttaglist.setTag(nbttagcompound1);
+                CompoundTag CompoundTag1 = new CompoundTag();
+                CompoundTag1.putByte("Slot", (byte)i);
+                contents[i].writeToNBT(CompoundTag1);
+                ListTag.addTag(CompoundTag1);
             }
         }
-        NBTTagCompound fuel = new NBTTagCompound();
+        CompoundTag fuel = new CompoundTag();
         if(currentFuel != null){
             currentFuel.writeToNBT(fuel);
         }
-        nbttagcompound.setTag("Items", nbttaglist);
-        nbttagcompound.setCompoundTag("CurrentFuel",fuel);
-        nbttagcompound.setInteger("BurnTime", (short)this.currentBurnTime);
-        nbttagcompound.setInteger("MaxBurnTime", (short)this.maxBurnTime);
+        CompoundTag.put("Items", ListTag);
+        CompoundTag.putCompound("CurrentFuel",fuel);
+        CompoundTag.putInt("BurnTime", (short)this.currentBurnTime);
+        CompoundTag.putInt("MaxBurnTime", (short)this.maxBurnTime);
     }
 
     public int getInventoryStackLimit()
@@ -171,15 +176,15 @@ public class TileEntityGenerator extends TileEntityEnergyConductor
         {
             return false;
         }
-        return entityplayer.getDistanceSq((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
+        return entityplayer.distanceToSqr((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D) <= 64D;
     }
 
     private int getBurnTimeFromItem(ItemStack itemStack) {
-        return itemStack == null ? 0 : LookupFuelFurnace.fuelFurnace().getFuelYield(itemStack.getItem().itemID);
+        return itemStack == null ? 0 : LookupFuelFurnace.instance.getFuelYield(itemStack.getItem().id);
     }
 
     private int getEnergyYieldForItem(ItemStack itemStack) {
-        return itemStack == null ? 0 : LookupFuelEnergy.fuelEnergy().getEnergyYield(itemStack.getItem().itemID);
+        return itemStack == null ? 0 : LookupFuelEnergy.fuelEnergy().getEnergyYield(itemStack.getItem().id);
     }
 
     public int getBurnTimeRemainingScaled(int i) {

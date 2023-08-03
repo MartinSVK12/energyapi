@@ -1,8 +1,19 @@
 package sunsetsatellite.energyapi;
 
+
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.sound.block.BlockSounds;
+import net.minecraft.core.block.Block;
+import net.minecraft.core.block.entity.TileEntity;
+import net.minecraft.core.block.material.Material;
+import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.item.Item;
+import net.minecraft.core.player.inventory.Container;
+import net.minecraft.core.player.inventory.IInventory;
+import net.minecraft.server.entity.player.EntityPlayerMP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayerMP;
@@ -22,7 +33,7 @@ import sunsetsatellite.energyapi.template.tiles.TileEntityBatteryBox;
 import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 import sunsetsatellite.energyapi.template.tiles.TileEntityWire;
-import sunsetsatellite.energyapi.util.Config;
+import sunsetsatellite.sunsetutils.util.Config;
 import turniplabs.halplibe.helper.BlockHelper;
 import turniplabs.halplibe.helper.EntityHelper;
 import turniplabs.halplibe.helper.ItemHelper;
@@ -30,11 +41,14 @@ import turniplabs.halplibe.helper.TextureHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Map;
 
 public class EnergyAPI implements ModInitializer {
     public static final String MOD_ID = "energyapi";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Config config = new Config(MOD_ID,mapOf(new String[]{"enableTemplateGenerator","enableTemplateMachine","enableTemplateWire","enableTemplateBatteryBox","enableTemplateBattery","GuiID","PacketUpdateEnergyID","energyName","energySuffix","energyUsageTicks","energyUsageSeconds"},new String[]{"0","0","0","0","0","7","109","Energy","E","E/t","E/s"}),new Class[]{EnergyAPI.class});
+    public static final String ENERGY_NAME = config.getFromConfig("energyName","Energy");
+    public static final String ENERGY_SUFFIX = config.getFromConfig("energySuffix","E");
 
     public static HashMap<String, ArrayList<Class<?>>> nameToGuiMap = new HashMap<>();
 
@@ -55,24 +69,23 @@ public class EnergyAPI implements ModInitializer {
     }
 
     public EnergyAPI(){
-        Config.init();
-        PacketAccessor.callAddIdClassMapping(Config.getFromConfig("PacketUpdateEnergyID",109),true,false,PacketUpdateEnergy.class);
-        if(Config.getFromConfig("enableTemplateBatteryBox",1) == 1){
-            batteryBox = BlockHelper.createBlock(MOD_ID,new BlockBatteryBox(1000, Material.iron),"batteryBox","machineside.png","batterybox.png", Block.soundMetalFootstep,1,1,0);
+        PacketAccessor.callAddIdClassMapping(EnergyAPI.config.getFromConfig("PacketUpdateEnergyID",109),true,false, PacketUpdateEnergy.class);
+        if(EnergyAPI.config.getFromConfig("enableTemplateBatteryBox",1) == 1){
+            batteryBox = BlockHelper.createBlock(MOD_ID,new BlockBatteryBox("batteryBox",1000, Material.metal),"batteryBox","machineside.png","batterybox.png", BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityBatteryBox.class,"Battery Box");
-            addToNameGuiMap("Battery Box",GuiBatteryBox.class,TileEntityBatteryBox.class);
+            addToNameGuiMap("Battery Box", GuiBatteryBox.class,TileEntityBatteryBox.class);
         }
-        if(Config.getFromConfig("enableTemplateGenerator",1) == 1){
-            generator = BlockHelper.createBlock(MOD_ID,new BlockGenerator(1001, Material.iron),"generator","machineside.png","generator.png",Block.soundMetalFootstep,1,1,0);
+        if(EnergyAPI.config.getFromConfig("enableTemplateGenerator",1) == 1){
+            generator = BlockHelper.createBlock(MOD_ID,new BlockGenerator("generator",1001, Material.metal),"generator","machineside.png","generator.png",BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityGenerator.class,"Generator");
-            addToNameGuiMap("Generator", GuiGenerator.class,TileEntityGenerator.class);
+            addToNameGuiMap("Generator", GuiGenerator.class, TileEntityGenerator.class);
         }
-        if(Config.getFromConfig("enableTemplateMachine",1) == 1){
-            machine = BlockHelper.createBlock(MOD_ID,new BlockMachine(1003, Material.iron),"machine","machineside.png","machine.png",Block.soundMetalFootstep,1,1,0);
+        if(EnergyAPI.config.getFromConfig("enableTemplateMachine",1) == 1){
+            machine = BlockHelper.createBlock(MOD_ID,new BlockMachine("machine",1003, Material.metal),"machine","machineside.png","machine.png",BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityMachine.class,"Energy Machine");
             addToNameGuiMap("Energy Machine", GuiMachine.class,TileEntityMachine.class);
         }
-        if(Config.getFromConfig("enableTemplateBattery",1) == 1){
+        if(EnergyAPI.config.getFromConfig("enableTemplateBattery",1) == 1){
             int[] tex = TextureHelper.registerItemTexture(MOD_ID,"battery0.png");
             batteryTex[0] = tex;
             tex = TextureHelper.registerItemTexture(MOD_ID,"battery1.png");
@@ -88,13 +101,13 @@ public class EnergyAPI implements ModInitializer {
             tex = TextureHelper.registerItemTexture(MOD_ID,"battery6.png");
             batteryTex[6] = tex;
 
-            battery = ItemHelper.createItem(MOD_ID,new ItemBattery(400),"battery","battery0.png").setMaxStackSize(1);
-            batteryUnlimited = ItemHelper.createItem(MOD_ID,new ItemBatteryUnlimited(401),"batteryUnlimited","batteryUnlimited.png").setMaxStackSize(1);
-            batteryVoid = ItemHelper.createItem(MOD_ID,new ItemBatteryVoid(402),"batteryVoid","batteryVoid.png").setMaxStackSize(1);
+            battery = ItemHelper.createItem(MOD_ID,new ItemBattery(17000),"battery","battery0.png").setMaxStackSize(1);
+            batteryUnlimited = ItemHelper.createItem(MOD_ID,new ItemBatteryUnlimited(17001),"batteryUnlimited","batteryUnlimited.png").setMaxStackSize(1);
+            batteryVoid = ItemHelper.createItem(MOD_ID,new ItemBatteryVoid(17002),"batteryVoid","batteryVoid.png").setMaxStackSize(1);
         }
-        if(Config.getFromConfig("enableTemplateWire",1) == 1){
-            wire = BlockHelper.createBlock(MOD_ID,new BlockWire(1002,Material.circuits),"wire","wire.png",Block.soundMetalFootstep,1,1,0);
-            Item.itemsList[wire.blockID].setIconCoord(wireTex[0],wireTex[1]);
+        if(EnergyAPI.config.getFromConfig("enableTemplateWire",1) == 1){
+            wire = BlockHelper.createBlock(MOD_ID,new BlockWire("wire",1002, Material.cloth),"wire","wire.png", BlockSounds.METAL,1,1,0);
+            Item.itemsList[wire.id].setIconCoord(wireTex[0],wireTex[1]);
             EntityHelper.createTileEntity(TileEntityWire.class,"Wire");
         }
     }
@@ -116,9 +129,21 @@ public class EnergyAPI implements ModInitializer {
         if(entityplayer instanceof EntityPlayerMP) {
             ((IEntityPlayerMP)entityplayer).displayGuiScreen_energyapi(guiScreen,container,tile);
         } else {
-            Minecraft.getMinecraft().displayGuiScreen(guiScreen);
+            Minecraft.getMinecraft(Minecraft.class).displayGuiScreen(guiScreen);
         }
     }
+
+    public static <K,V> Map<K,V> mapOf(K[] keys, V[] values){
+        if(keys.length != values.length){
+            throw new IllegalArgumentException("Arrays differ in size!");
+        }
+        HashMap<K,V> map = new HashMap<>();
+        for (int i = 0; i < keys.length; i++) {
+            map.put(keys[i],values[i]);
+        }
+        return map;
+    }
+
 
     public static void addToNameGuiMap(String name, Class<? extends Gui> guiClass, Class<? extends TileEntity> tileEntityClass){
         ArrayList<Class<?>> list = new ArrayList<>();

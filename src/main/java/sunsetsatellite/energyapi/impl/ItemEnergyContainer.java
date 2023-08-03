@@ -1,7 +1,8 @@
 package sunsetsatellite.energyapi.impl;
 
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+
+import net.minecraft.core.item.Item;
+import net.minecraft.core.item.ItemStack;
 import sunsetsatellite.energyapi.api.IEnergyItem;
 
 public class ItemEnergyContainer extends Item implements IEnergyItem {
@@ -38,8 +39,8 @@ public class ItemEnergyContainer extends Item implements IEnergyItem {
 
     @Override
     public int getCapacity(ItemStack stack) {
-        if(!stack.tag.hasKey("capacity")){
-            stack.tag.setInteger("capacity",baseCapacity);
+        if(!stack.tag.containsKey("capacity")){
+            stack.tag.putInt("capacity",baseCapacity);
             return baseCapacity;
         }
         return stack.tag.getInteger("capacity");
@@ -47,8 +48,8 @@ public class ItemEnergyContainer extends Item implements IEnergyItem {
 
     @Override
     public int getMaxReceive(ItemStack stack) {
-        if(!stack.tag.hasKey("maxReceive")){
-            stack.tag.setInteger("maxReceive",baseReceive);
+        if(!stack.tag.containsKey("maxReceive")){
+            stack.tag.putInt("maxReceive",baseReceive);
             return baseReceive;
 
         }
@@ -57,8 +58,8 @@ public class ItemEnergyContainer extends Item implements IEnergyItem {
 
     @Override
     public int getMaxProvide(ItemStack stack) {
-        if(!stack.tag.hasKey("maxProvide")){
-            stack.tag.setInteger("maxProvide",baseProvide);
+        if(!stack.tag.containsKey("maxProvide")){
+            stack.tag.putInt("maxProvide",baseProvide);
             return baseProvide;
         }
         return stack.tag.getInteger("maxProvide");
@@ -66,12 +67,12 @@ public class ItemEnergyContainer extends Item implements IEnergyItem {
 
     @Override
     public void modifyEnergy(ItemStack stack, int amount) {
-        stack.tag.setInteger("energy",getEnergy(stack)+amount);
+        stack.tag.putInt("energy",getEnergy(stack)+amount);
         if(stack.tag.getInteger("energy") > getCapacity(stack)){
-            stack.tag.setInteger("energy",getCapacity(stack));
+            stack.tag.putInt("energy",getCapacity(stack));
         }
         if(stack.tag.getInteger("energy") < 0){
-            stack.tag.setInteger("energy",0);
+            stack.tag.putInt("energy",0);
         }
     }
 }
