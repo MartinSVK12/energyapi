@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "energyapi",
+  "version": "1.1.4",
+
+  "name": "EnergyAPI",
+  "description": "API for energy related processes.",
+  "icon": "icon.png",
+  "authors": [
+    "MartinSVK12"
+  ],
+  "contact": {
+    "homepage": "https://github.com/MartinSVK12/energyapi",
+    "sources": "https://github.com/MartinSVK12/energyapi"
+  },
+
+  "license": "MIT",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "sunsetsatellite.energyapi.EnergyAPI"
+    ]
+  },
+  "mixins": [
+    "energyapi.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "halplibe": ">=2.1.0",
+    "minecraft": "1.7.7.0",
+    "sunsetutils": ">=1.7.1"
+  },
+  "suggests": {
+  }
+}

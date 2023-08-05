@@ -34,6 +34,7 @@ import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 import sunsetsatellite.energyapi.template.tiles.TileEntityWire;
 import sunsetsatellite.sunsetutils.util.Config;
+import turniplabs.halplibe.HalpLibe;
 import turniplabs.halplibe.helper.BlockHelper;
 import turniplabs.halplibe.helper.EntityHelper;
 import turniplabs.halplibe.helper.ItemHelper;
@@ -71,17 +72,17 @@ public class EnergyAPI implements ModInitializer {
     public EnergyAPI(){
         PacketAccessor.callAddIdClassMapping(EnergyAPI.config.getFromConfig("PacketUpdateEnergyID",109),true,false, PacketUpdateEnergy.class);
         if(EnergyAPI.config.getFromConfig("enableTemplateBatteryBox",1) == 1){
-            batteryBox = BlockHelper.createBlock(MOD_ID,new BlockBatteryBox("batteryBox",1000, Material.metal),"batteryBox","machineside.png","batterybox.png", BlockSounds.METAL,1,1,0);
+            batteryBox = BlockHelper.createBlock(MOD_ID,new BlockBatteryBox(HalpLibe.addModId(MOD_ID,"batteryBox"),1000, Material.metal),"machineside.png","batterybox.png", BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityBatteryBox.class,"Battery Box");
             addToNameGuiMap("Battery Box", GuiBatteryBox.class,TileEntityBatteryBox.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateGenerator",1) == 1){
-            generator = BlockHelper.createBlock(MOD_ID,new BlockGenerator("generator",1001, Material.metal),"generator","machineside.png","generator.png",BlockSounds.METAL,1,1,0);
+            generator = BlockHelper.createBlock(MOD_ID,new BlockGenerator(HalpLibe.addModId(MOD_ID,"generator"),1001, Material.metal),"machineside.png","generator.png",BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityGenerator.class,"Generator");
             addToNameGuiMap("Generator", GuiGenerator.class, TileEntityGenerator.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateMachine",1) == 1){
-            machine = BlockHelper.createBlock(MOD_ID,new BlockMachine("machine",1003, Material.metal),"machine","machineside.png","machine.png",BlockSounds.METAL,1,1,0);
+            machine = BlockHelper.createBlock(MOD_ID,new BlockMachine(HalpLibe.addModId(MOD_ID,"machine"),1003, Material.metal),"machineside.png","machine.png",BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityMachine.class,"Energy Machine");
             addToNameGuiMap("Energy Machine", GuiMachine.class,TileEntityMachine.class);
         }
@@ -106,7 +107,7 @@ public class EnergyAPI implements ModInitializer {
             batteryVoid = ItemHelper.createItem(MOD_ID,new ItemBatteryVoid(17002),"batteryVoid","batteryVoid.png").setMaxStackSize(1);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateWire",1) == 1){
-            wire = BlockHelper.createBlock(MOD_ID,new BlockWire("wire",1002, Material.cloth),"wire","wire.png", BlockSounds.METAL,1,1,0);
+            wire = BlockHelper.createBlock(MOD_ID,new BlockWire(HalpLibe.addModId(MOD_ID,"wire"),1002, Material.cloth),"wire.png", BlockSounds.METAL,1,1,0);
             Item.itemsList[wire.id].setIconCoord(wireTex[0],wireTex[1]);
             EntityHelper.createTileEntity(TileEntityWire.class,"Wire");
         }
