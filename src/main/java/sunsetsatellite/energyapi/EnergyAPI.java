@@ -35,10 +35,7 @@ import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 import sunsetsatellite.energyapi.template.tiles.TileEntityWire;
 import sunsetsatellite.sunsetutils.util.Config;
 import turniplabs.halplibe.HalpLibe;
-import turniplabs.halplibe.helper.BlockHelper;
-import turniplabs.halplibe.helper.EntityHelper;
-import turniplabs.halplibe.helper.ItemHelper;
-import turniplabs.halplibe.helper.TextureHelper;
+import turniplabs.halplibe.helper.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +59,7 @@ public class EnergyAPI implements ModInitializer {
     public static Item batteryVoid;
 
     public static int[][] batteryTex = new int[7][];
-    public static int[] wireTex = TextureHelper.registerBlockTexture(MOD_ID,"wireItem.png");
+    public static int[] wireTex = TextureHelper.getOrCreateBlockTexture(MOD_ID,"wireItem.png");
 
     @Override
     public void onInitialize() {
@@ -72,34 +69,34 @@ public class EnergyAPI implements ModInitializer {
     public EnergyAPI(){
         PacketAccessor.callAddIdClassMapping(EnergyAPI.config.getFromConfig("PacketUpdateEnergyID",109),true,false, PacketUpdateEnergy.class);
         if(EnergyAPI.config.getFromConfig("enableTemplateBatteryBox",1) == 1){
-            batteryBox = BlockHelper.createBlock(MOD_ID,new BlockBatteryBox(HalpLibe.addModId(MOD_ID,"batteryBox"),1000, Material.metal),"machineside.png","batterybox.png", BlockSounds.METAL,1,1,0);
+            batteryBox = new BlockBuilder(MOD_ID).setTextures("batterybox.png").setSideTextures("machineside.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockBatteryBox("batteryBox", 1000, Material.metal));
             EntityHelper.createTileEntity(TileEntityBatteryBox.class,"Battery Box");
             addToNameGuiMap("Battery Box", GuiBatteryBox.class,TileEntityBatteryBox.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateGenerator",1) == 1){
-            generator = BlockHelper.createBlock(MOD_ID,new BlockGenerator(HalpLibe.addModId(MOD_ID,"generator"),1001, Material.metal),"machineside.png","generator.png",BlockSounds.METAL,1,1,0);
+            generator = new BlockBuilder(MOD_ID).setTextures("generator.png").setSideTextures("machineside.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockGenerator("generator", 1001, Material.metal));
             EntityHelper.createTileEntity(TileEntityGenerator.class,"Generator");
             addToNameGuiMap("Generator", GuiGenerator.class, TileEntityGenerator.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateMachine",1) == 1){
-            machine = BlockHelper.createBlock(MOD_ID,new BlockMachine(HalpLibe.addModId(MOD_ID,"machine"),1003, Material.metal),"machineside.png","machine.png",BlockSounds.METAL,1,1,0);
+            machine = new BlockBuilder(MOD_ID).setTextures("machine.png").setSideTextures("machineside.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockMachine("machine", 1003, Material.metal));
             EntityHelper.createTileEntity(TileEntityMachine.class,"Energy Machine");
             addToNameGuiMap("Energy Machine", GuiMachine.class,TileEntityMachine.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateBattery",1) == 1){
-            int[] tex = TextureHelper.registerItemTexture(MOD_ID,"battery0.png");
+            int[] tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery0.png");
             batteryTex[0] = tex;
-            tex = TextureHelper.registerItemTexture(MOD_ID,"battery1.png");
+            tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery1.png");
             batteryTex[1] = tex;
-            tex = TextureHelper.registerItemTexture(MOD_ID,"battery2.png");
+            tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery2.png");
             batteryTex[2] = tex;
-            tex = TextureHelper.registerItemTexture(MOD_ID,"battery3.png");
+            tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery3.png");
             batteryTex[3] = tex;
-            tex = TextureHelper.registerItemTexture(MOD_ID,"battery4.png");
+            tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery4.png");
             batteryTex[4] = tex;
-            tex = TextureHelper.registerItemTexture(MOD_ID,"battery5.png");
+            tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery5.png");
             batteryTex[5] = tex;
-            tex = TextureHelper.registerItemTexture(MOD_ID,"battery6.png");
+            tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery6.png");
             batteryTex[6] = tex;
 
             battery = ItemHelper.createItem(MOD_ID,new ItemBattery(17000),"battery","battery0.png").setMaxStackSize(1);
@@ -107,7 +104,8 @@ public class EnergyAPI implements ModInitializer {
             batteryVoid = ItemHelper.createItem(MOD_ID,new ItemBatteryVoid(17002),"batteryVoid","batteryVoid.png").setMaxStackSize(1);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateWire",1) == 1){
-            wire = BlockHelper.createBlock(MOD_ID,new BlockWire(HalpLibe.addModId(MOD_ID,"wire"),1002, Material.cloth),"wire.png", BlockSounds.METAL,1,1,0);
+            //wire = BlockHelper.createBlock(MOD_ID,new BlockWire(HalpLibe.addModId(MOD_ID,"wire"),1002, Material.cloth),"wire.png", BlockSounds.METAL,1,1,0);
+            wire = new BlockBuilder(MOD_ID).setTextures("wire.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockWire("wire", 1002, Material.cloth));
             Item.itemsList[wire.id].setIconCoord(wireTex[0],wireTex[1]);
             EntityHelper.createTileEntity(TileEntityWire.class,"Wire");
         }
