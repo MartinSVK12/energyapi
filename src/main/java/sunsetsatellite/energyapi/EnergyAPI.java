@@ -69,17 +69,17 @@ public class EnergyAPI implements ModInitializer {
     public EnergyAPI(){
         PacketAccessor.callAddIdClassMapping(EnergyAPI.config.getFromConfig("PacketUpdateEnergyID",109),true,false, PacketUpdateEnergy.class);
         if(EnergyAPI.config.getFromConfig("enableTemplateBatteryBox",1) == 1){
-            batteryBox = new BlockBuilder(MOD_ID).setTextures("batterybox.png").setSideTextures("machineside.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockBatteryBox("batteryBox", 1000, Material.metal));
+            batteryBox = new BlockBuilder(MOD_ID).setTextures("machineside.png").setSideTextures("batterybox.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockBatteryBox("batteryBox",EnergyAPI.config.getFromConfig("batteryBox", 1000), Material.metal));
             EntityHelper.createTileEntity(TileEntityBatteryBox.class,"Battery Box");
             addToNameGuiMap("Battery Box", GuiBatteryBox.class,TileEntityBatteryBox.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateGenerator",1) == 1){
-            generator = new BlockBuilder(MOD_ID).setTextures("generator.png").setSideTextures("machineside.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockGenerator("generator", 1001, Material.metal));
+            generator = new BlockBuilder(MOD_ID).setTextures("machineside.png").setSideTextures("generator.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockGenerator("generator", EnergyAPI.config.getFromConfig("generator", 1001), Material.metal));
             EntityHelper.createTileEntity(TileEntityGenerator.class,"Generator");
             addToNameGuiMap("Generator", GuiGenerator.class, TileEntityGenerator.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateMachine",1) == 1){
-            machine = new BlockBuilder(MOD_ID).setTextures("machine.png").setSideTextures("machineside.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockMachine("machine", 1003, Material.metal));
+            machine = new BlockBuilder(MOD_ID).setTextures("machineside.png").setSideTextures("machine.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockMachine("machine", EnergyAPI.config.getFromConfig("machine", 1003), Material.metal));
             EntityHelper.createTileEntity(TileEntityMachine.class,"Energy Machine");
             addToNameGuiMap("Energy Machine", GuiMachine.class,TileEntityMachine.class);
         }
@@ -99,12 +99,12 @@ public class EnergyAPI implements ModInitializer {
             tex = TextureHelper.getOrCreateItemTexture(MOD_ID,"battery6.png");
             batteryTex[6] = tex;
 
-            battery = ItemHelper.createItem(MOD_ID,new ItemBattery(17000),"battery","battery0.png").setMaxStackSize(1);
-            batteryUnlimited = ItemHelper.createItem(MOD_ID,new ItemBatteryUnlimited(17001),"batteryUnlimited","batteryUnlimited.png").setMaxStackSize(1);
-            batteryVoid = ItemHelper.createItem(MOD_ID,new ItemBatteryVoid(17002),"batteryVoid","batteryVoid.png").setMaxStackSize(1);
+            battery = ItemHelper.createItem(MOD_ID,new ItemBattery(EnergyAPI.config.getFromConfig("battery", 17000)),"battery","battery0.png").setMaxStackSize(1);
+            batteryUnlimited = ItemHelper.createItem(MOD_ID,new ItemBatteryUnlimited(EnergyAPI.config.getFromConfig("batteryUnlimited", 17001)),"batteryUnlimited","batteryUnlimited.png").setMaxStackSize(1);
+            batteryVoid = ItemHelper.createItem(MOD_ID,new ItemBatteryVoid(EnergyAPI.config.getFromConfig("batteryVoid", 17002)),"batteryVoid","batteryVoid.png").setMaxStackSize(1);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateWire",1) == 1){
-            wire = new BlockBuilder(MOD_ID).setTextures("wire.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockWire("wire", 1002, Material.cloth));
+            wire = new BlockBuilder(MOD_ID).setTextures("wire.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockWire("wire", EnergyAPI.config.getFromConfig("wire", 1002), Material.cloth));
             Item.itemsList[wire.id].setIconCoord(wireTex[0],wireTex[1]);
             EntityHelper.createTileEntity(TileEntityWire.class,"Wire");
         }
