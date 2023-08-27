@@ -104,7 +104,6 @@ public class EnergyAPI implements ModInitializer {
             batteryVoid = ItemHelper.createItem(MOD_ID,new ItemBatteryVoid(17002),"batteryVoid","batteryVoid.png").setMaxStackSize(1);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateWire",1) == 1){
-            //wire = BlockHelper.createBlock(MOD_ID,new BlockWire(HalpLibe.addModId(MOD_ID,"wire"),1002, Material.cloth),"wire.png", BlockSounds.METAL,1,1,0);
             wire = new BlockBuilder(MOD_ID).setTextures("wire.png").setBlockSound(BlockSounds.METAL).setHardness(1).setResistance(1).build(new BlockWire("wire", 1002, Material.cloth));
             Item.itemsList[wire.id].setIconCoord(wireTex[0],wireTex[1]);
             EntityHelper.createTileEntity(TileEntityWire.class,"Wire");
