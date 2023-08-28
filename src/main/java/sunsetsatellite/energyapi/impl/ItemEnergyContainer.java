@@ -34,45 +34,45 @@ public class ItemEnergyContainer extends Item implements IEnergyItem {
 
     @Override
     public int getEnergy(ItemStack stack) {
-        return stack.tag.getInteger("energy");
+        return stack.getData().getInteger("energy");
     }
 
     @Override
     public int getCapacity(ItemStack stack) {
-        if(!stack.tag.containsKey("capacity")){
-            stack.tag.putInt("capacity",baseCapacity);
+        if(!stack.getData().containsKey("capacity")){
+            stack.getData().putInt("capacity",baseCapacity);
             return baseCapacity;
         }
-        return stack.tag.getInteger("capacity");
+        return stack.getData().getInteger("capacity");
     }
 
     @Override
     public int getMaxReceive(ItemStack stack) {
-        if(!stack.tag.containsKey("maxReceive")){
-            stack.tag.putInt("maxReceive",baseReceive);
+        if(!stack.getData().containsKey("maxReceive")){
+            stack.getData().putInt("maxReceive",baseReceive);
             return baseReceive;
 
         }
-        return stack.tag.getInteger("maxReceive");
+        return stack.getData().getInteger("maxReceive");
     }
 
     @Override
     public int getMaxProvide(ItemStack stack) {
-        if(!stack.tag.containsKey("maxProvide")){
-            stack.tag.putInt("maxProvide",baseProvide);
+        if(!stack.getData().containsKey("maxProvide")){
+            stack.getData().putInt("maxProvide",baseProvide);
             return baseProvide;
         }
-        return stack.tag.getInteger("maxProvide");
+        return stack.getData().getInteger("maxProvide");
     }
 
     @Override
     public void modifyEnergy(ItemStack stack, int amount) {
-        stack.tag.putInt("energy",getEnergy(stack)+amount);
-        if(stack.tag.getInteger("energy") > getCapacity(stack)){
-            stack.tag.putInt("energy",getCapacity(stack));
+        stack.getData().putInt("energy",getEnergy(stack)+amount);
+        if(stack.getData().getInteger("energy") > getCapacity(stack)){
+            stack.getData().putInt("energy",getCapacity(stack));
         }
-        if(stack.tag.getInteger("energy") < 0){
-            stack.tag.putInt("energy",0);
+        if(stack.getData().getInteger("energy") < 0){
+            stack.getData().putInt("energy",0);
         }
     }
 }
