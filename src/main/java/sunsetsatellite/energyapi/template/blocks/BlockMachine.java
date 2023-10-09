@@ -21,7 +21,7 @@ public class BlockMachine extends BlockTileEntityRotatable {
 
     public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-        if(world.isClientSide)
+        if(!world.isClientSide)
         {
             return true;
         } else
