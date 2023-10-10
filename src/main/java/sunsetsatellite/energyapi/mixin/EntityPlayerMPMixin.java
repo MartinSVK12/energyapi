@@ -36,7 +36,7 @@ public abstract class EntityPlayerMPMixin extends EntityPlayer implements IEntit
     @Override
     public void displayGuiScreen_energyapi(GuiScreen guiScreen, Container container, IInventory inventory) {
         this.getNextWindowId();
-        this.playerNetServerHandler.sendPacket(new Packet100OpenWindow(this.currentWindowId, EnergyAPI.config.getFromConfig("GuiID",7), inventory.getInvName(), inventory.getSizeInventory()));
+        this.playerNetServerHandler.sendPacket(new Packet100OpenWindow(this.currentWindowId, EnergyAPI.config.getFromConfig("GuiID",10), inventory.getInvName(), inventory.getSizeInventory()));
         this.craftingInventory = container;
         this.craftingInventory.windowId = this.currentWindowId;
         this.craftingInventory.onContainerInit(((EntityPlayerMP)((Object)this)));

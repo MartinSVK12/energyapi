@@ -1,6 +1,7 @@
 package sunsetsatellite.energyapi.template.blocks;
 
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.block.BlockTileEntityRotatable;
 import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.block.material.Material;
@@ -21,17 +22,14 @@ public class BlockMachine extends BlockTileEntityRotatable {
 
     public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-        if(!world.isClientSide)
-        {
-            return true;
-        } else
+        if(Minecraft.getMinecraft(Minecraft.class) != null)
         {
             TileEntityMachine tile = (TileEntityMachine) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
                 EnergyAPI.displayGui(entityplayer,new GuiMachine(entityplayer.inventory, tile),new ContainerMachine(entityplayer.inventory,tile),tile);
             }
-            return true;
         }
+        return true;
     }
 
     public void onBlockRemoval(World world, int i, int j, int k)

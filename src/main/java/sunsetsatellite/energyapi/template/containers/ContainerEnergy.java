@@ -51,17 +51,17 @@ public class ContainerEnergy extends Container {
     }
 
     @Override
-    public List<Integer> getMoveSlots(InventoryAction inventoryAction, Slot slot, int i, EntityPlayer entityPlayer) {
+    public List<Integer> getMoveSlots(InventoryAction action, Slot slot, int target, EntityPlayer player) {
         return null;
     }
 
     @Override
-    public List<Integer> getTargetSlots(InventoryAction inventoryAction, Slot slot, int i, EntityPlayer entityPlayer) {
+    public List<Integer> getTargetSlots(InventoryAction action, Slot slot, int target, EntityPlayer player) {
         return null;
     }
 
     @Override
     public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
-        return false;
+        return true;
     }
 }

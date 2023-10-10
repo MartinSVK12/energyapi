@@ -47,7 +47,7 @@ import java.util.Map;
 public class EnergyAPI implements ModInitializer {
     public static final String MOD_ID = "energyapi";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final Config config = new Config(MOD_ID,mapOf(new String[]{"enableTemplateGenerator","enableTemplateMachine","enableTemplateWire","enableTemplateBatteryBox","enableTemplateBattery","GuiID","PacketUpdateEnergyID","energyName","energySuffix","energyUsageTicks","energyUsageSeconds"},new String[]{"0","0","0","0","0","7","109","Energy","E","E/t","E/s"}),new Class[]{EnergyAPI.class});
+    public static final Config config = new Config(MOD_ID,mapOf(new String[]{"enableTemplateGenerator","enableTemplateMachine","enableTemplateWire","enableTemplateBatteryBox","enableTemplateBattery","GuiID","PacketUpdateEnergyID","energyName","energySuffix","energyUsageTicks","energyUsageSeconds"},new String[]{"0","0","0","0","0","10","109","Energy","E","E/t","E/s"}),new Class[]{EnergyAPI.class});
     public static final String ENERGY_NAME = config.getFromConfig("energyName","Energy");
     public static final String ENERGY_SUFFIX = config.getFromConfig("energySuffix","E");
 

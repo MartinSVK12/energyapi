@@ -33,7 +33,7 @@ public class NetClientHandlerMixin extends NetHandler implements INetClientHandl
             at = @At("TAIL")
     )
     public void handleOpenWindow(Packet100OpenWindow packet100openwindow, CallbackInfo ci) {
-        if(packet100openwindow.inventoryType == EnergyAPI.config.getFromConfig("GuiID",7)){
+        if(packet100openwindow.inventoryType == EnergyAPI.config.getFromConfig("GuiID",10)){
             TileEntity tile;
             try {
                 tile = (TileEntity) EnergyAPI.nameToGuiMap.get(packet100openwindow.windowTitle).get(1).getDeclaredConstructor().newInstance();
