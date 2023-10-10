@@ -4,7 +4,9 @@
   "package": "sunsetsatellite.energyapi.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "EntityPlayerMixin",
     "EntityPlayerMPMixin",
+    "EntityPlayerSPMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin",
     "PacketAccessor",

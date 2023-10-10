@@ -13,14 +13,14 @@ import net.minecraft.server.net.handler.NetServerHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import sunsetsatellite.energyapi.EnergyAPI;
-import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayerMP;
+import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
 import sunsetsatellite.energyapi.mp.packets.PacketUpdateEnergy;
 
 @Mixin(
         value = EntityPlayerMP.class,
         remap = false
 )
-public abstract class EntityPlayerMPMixin extends EntityPlayer implements IEntityPlayerMP, ICrafting {
+public abstract class EntityPlayerMPMixin extends EntityPlayer implements IEntityPlayer, ICrafting {
 
     public EntityPlayerMPMixin(World world) {
         super(world);

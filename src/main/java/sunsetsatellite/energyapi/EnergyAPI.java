@@ -16,7 +16,7 @@ import net.minecraft.core.player.inventory.IInventory;
 import net.minecraft.server.entity.player.EntityPlayerMP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayerMP;
+import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
 import sunsetsatellite.energyapi.mixin.PacketAccessor;
 import sunsetsatellite.energyapi.mp.packets.PacketUpdateEnergy;
 import sunsetsatellite.energyapi.template.blocks.BlockBatteryBox;
@@ -124,14 +124,6 @@ public class EnergyAPI implements ModInitializer {
 
         double ratio = (endCoord2 - startCoord2) / (endCoord1 - startCoord1);
         return ratio * (valueCoord1 - startCoord1) + startCoord2;
-    }
-
-    public static void displayGui(EntityPlayer entityplayer, GuiScreen guiScreen, Container container, IInventory tile) {
-        if(entityplayer instanceof EntityPlayerMP) {
-            ((IEntityPlayerMP)entityplayer).displayGuiScreen_energyapi(guiScreen,container,tile);
-        } else {
-            Minecraft.getMinecraft(Minecraft.class).displayGuiScreen(guiScreen);
-        }
     }
 
     public static <K,V> Map<K,V> mapOf(K[] keys, V[] values){

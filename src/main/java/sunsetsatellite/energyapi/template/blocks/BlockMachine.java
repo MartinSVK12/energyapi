@@ -11,7 +11,10 @@ import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.inventory.IInventory;
 import net.minecraft.core.world.World;
 import sunsetsatellite.energyapi.EnergyAPI;
+import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
+import sunsetsatellite.energyapi.template.containers.ContainerBatteryBox;
 import sunsetsatellite.energyapi.template.containers.ContainerMachine;
+import sunsetsatellite.energyapi.template.gui.GuiBatteryBox;
 import sunsetsatellite.energyapi.template.gui.GuiMachine;
 import sunsetsatellite.energyapi.template.tiles.TileEntityMachine;
 
@@ -26,7 +29,7 @@ public class BlockMachine extends BlockTileEntityRotatable {
         {
             TileEntityMachine tile = (TileEntityMachine) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
-                EnergyAPI.displayGui(entityplayer,new GuiMachine(entityplayer.inventory, tile),new ContainerMachine(entityplayer.inventory,tile),tile);
+                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(new GuiMachine(entityplayer.inventory, tile),new ContainerMachine(entityplayer.inventory,tile),tile);
             }
         }
         return true;
