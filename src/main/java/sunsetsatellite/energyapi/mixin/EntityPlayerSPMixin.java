@@ -7,15 +7,24 @@ import net.minecraft.core.player.inventory.Container;
 import net.minecraft.core.player.inventory.IInventory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import sunsetsatellite.energyapi.EnergyAPI;
 import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 @Mixin(value = EntityPlayerSP.class, remap = false)
 public class EntityPlayerSPMixin implements IEntityPlayer {
     @Shadow
     protected Minecraft mc;
     @Override
-    public void displayGuiScreen_energyapi(GuiScreen guiScreen, Container container, IInventory inventory) {
-        mc.displayGuiScreen(guiScreen);
+    public void displayGuiScreen_energyapi(IInventory inventory) {
+        ArrayList<Class<?>> list = EnergyAPI.nameToGuiMap.get(inventory.getInvName());
+        try {
+            mc.displayGuiScreen((GuiScreen) list.get(0).getDeclaredConstructors()[0].newInstance(this.mc.thePlayer.inventory,inventory));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

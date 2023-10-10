@@ -29,7 +29,7 @@ public class BlockGenerator extends BlockTileEntityRotatable {
         {
             TileEntityGenerator tile = (TileEntityGenerator) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
-                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(new GuiGenerator(entityplayer.inventory, tile),new ContainerGenerator(entityplayer.inventory,tile),tile);
+                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(tile);
             }
         }
         return true;

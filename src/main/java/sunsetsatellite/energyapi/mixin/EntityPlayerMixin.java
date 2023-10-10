@@ -10,7 +10,7 @@ import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
 @Mixin(value = EntityPlayer.class, remap = false)
 public class EntityPlayerMixin implements IEntityPlayer {
     @Override
-    public void displayGuiScreen_energyapi(GuiScreen guiScreen, Container container, IInventory inventory) {
+    public void displayGuiScreen_energyapi(IInventory inventory) {
 
     }
 

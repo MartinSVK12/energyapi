@@ -27,7 +27,7 @@ public class BlockBatteryBox extends BlockTileEntityRotatable {
         {
             TileEntityBatteryBox tile = (TileEntityBatteryBox) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
-                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(new GuiBatteryBox(entityplayer.inventory, tile),new ContainerBatteryBox(entityplayer.inventory,tile),tile);
+                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(tile);
             }
         }
         return true;

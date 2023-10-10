@@ -29,7 +29,7 @@ public class BlockMachine extends BlockTileEntityRotatable {
         {
             TileEntityMachine tile = (TileEntityMachine) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
-                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(new GuiMachine(entityplayer.inventory, tile),new ContainerMachine(entityplayer.inventory,tile),tile);
+                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(tile);
             }
         }
         return true;

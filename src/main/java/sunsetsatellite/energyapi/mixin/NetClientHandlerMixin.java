@@ -47,12 +47,7 @@ public class NetClientHandlerMixin extends NetHandler implements INetClientHandl
                      NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
-            try {
-                ArrayList<Class<?>> list = EnergyAPI.nameToGuiMap.get(packet100openwindow.windowTitle);
-                ((IEntityPlayer)mc.thePlayer).displayGuiScreen_energyapi((GuiScreen) list.get(0).getDeclaredConstructors()[0].newInstance(this.mc.thePlayer.inventory,tile), (Container)list.get(2).getDeclaredConstructors()[0].newInstance(this.mc.thePlayer.inventory,tile), (IInventory) tile);
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
+            ((IEntityPlayer)mc.thePlayer).displayGuiScreen_energyapi((IInventory) tile);
             this.mc.thePlayer.craftingInventory.windowId = packet100openwindow.windowId;
         }
     }
