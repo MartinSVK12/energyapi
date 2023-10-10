@@ -23,7 +23,7 @@ public class BlockBatteryBox extends BlockTileEntityRotatable {
 
     public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-        if(Minecraft.getMinecraft(Minecraft.class) != null)
+        if(!world.isClientSide)
         {
             TileEntityBatteryBox tile = (TileEntityBatteryBox) world.getBlockTileEntity(i, j, k);
             if(tile != null) {

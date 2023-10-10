@@ -7,17 +7,21 @@ import net.minecraft.client.net.handler.NetClientHandler;
 import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.net.handler.NetHandler;
 import net.minecraft.core.net.packet.Packet100OpenWindow;
+import net.minecraft.core.player.inventory.Container;
+import net.minecraft.core.player.inventory.IInventory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import sunsetsatellite.energyapi.EnergyAPI;
+import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
 import sunsetsatellite.energyapi.interfaces.mixins.INetClientHandler;
 import sunsetsatellite.energyapi.mp.packets.PacketUpdateEnergy;
 import sunsetsatellite.energyapi.template.containers.ContainerEnergy;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 @Mixin(
         value= NetClientHandler.class,
@@ -33,7 +37,9 @@ public class NetClientHandlerMixin extends NetHandler implements INetClientHandl
             at = @At("TAIL")
     )
     public void handleOpenWindow(Packet100OpenWindow packet100openwindow, CallbackInfo ci) {
-        if(packet100openwindow.inventoryType == EnergyAPI.config.getFromConfig("GuiID",10)){
+        EnergyAPI.LOGGER.info(String.valueOf(packet100openwindow.inventoryType));
+        if(packet100openwindow.inventoryType == 10){
+            EnergyAPI.LOGGER.info("IS IT WORKING?");
             TileEntity tile;
             try {
                 tile = (TileEntity) EnergyAPI.nameToGuiMap.get(packet100openwindow.windowTitle).get(1).getDeclaredConstructor().newInstance();
@@ -42,7 +48,8 @@ public class NetClientHandlerMixin extends NetHandler implements INetClientHandl
                 throw new RuntimeException(e);
             }
             try {
-                this.mc.displayGuiScreen((GuiScreen) EnergyAPI.nameToGuiMap.get(packet100openwindow.windowTitle).get(0).getDeclaredConstructors()[0].newInstance(this.mc.thePlayer.inventory,tile));
+                ArrayList<Class<?>> list = EnergyAPI.nameToGuiMap.get(packet100openwindow.windowTitle);
+                ((IEntityPlayer)mc.thePlayer).displayGuiScreen_energyapi((GuiScreen) list.get(0).getDeclaredConstructors()[0].newInstance(this.mc.thePlayer.inventory,tile), (Container)list.get(2).getDeclaredConstructors()[0].newInstance(this.mc.thePlayer.inventory,tile), (IInventory) tile);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
