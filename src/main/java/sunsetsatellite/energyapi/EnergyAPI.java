@@ -16,13 +16,16 @@ import net.minecraft.core.player.inventory.IInventory;
 import net.minecraft.server.entity.player.EntityPlayerMP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayerMP;
+import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
 import sunsetsatellite.energyapi.mixin.PacketAccessor;
 import sunsetsatellite.energyapi.mp.packets.PacketUpdateEnergy;
 import sunsetsatellite.energyapi.template.blocks.BlockBatteryBox;
 import sunsetsatellite.energyapi.template.blocks.BlockGenerator;
 import sunsetsatellite.energyapi.template.blocks.BlockMachine;
 import sunsetsatellite.energyapi.template.blocks.BlockWire;
+import sunsetsatellite.energyapi.template.containers.ContainerBatteryBox;
+import sunsetsatellite.energyapi.template.containers.ContainerGenerator;
+import sunsetsatellite.energyapi.template.containers.ContainerMachine;
 import sunsetsatellite.energyapi.template.gui.GuiBatteryBox;
 import sunsetsatellite.energyapi.template.gui.GuiGenerator;
 import sunsetsatellite.energyapi.template.gui.GuiMachine;
@@ -74,17 +77,17 @@ public class EnergyAPI implements ModInitializer {
         if(EnergyAPI.config.getFromConfig("enableTemplateBatteryBox",1) == 1){
             batteryBox = BlockHelper.createBlock(MOD_ID,new BlockBatteryBox(HalpLibe.addModId(MOD_ID,"batteryBox"),1000, Material.metal),"machineside.png","batterybox.png", BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityBatteryBox.class,"Battery Box");
-            addToNameGuiMap("Battery Box", GuiBatteryBox.class,TileEntityBatteryBox.class);
+            addToNameGuiMap("Battery Box", GuiBatteryBox.class,TileEntityBatteryBox.class, ContainerBatteryBox.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateGenerator",1) == 1){
             generator = BlockHelper.createBlock(MOD_ID,new BlockGenerator(HalpLibe.addModId(MOD_ID,"generator"),1001, Material.metal),"machineside.png","generator.png",BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityGenerator.class,"Generator");
-            addToNameGuiMap("Generator", GuiGenerator.class, TileEntityGenerator.class);
+            addToNameGuiMap("Generator", GuiGenerator.class, TileEntityGenerator.class, ContainerGenerator.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateMachine",1) == 1){
             machine = BlockHelper.createBlock(MOD_ID,new BlockMachine(HalpLibe.addModId(MOD_ID,"machine"),1003, Material.metal),"machineside.png","machine.png",BlockSounds.METAL,1,1,0);
             EntityHelper.createTileEntity(TileEntityMachine.class,"Energy Machine");
-            addToNameGuiMap("Energy Machine", GuiMachine.class,TileEntityMachine.class);
+            addToNameGuiMap("Energy Machine", GuiMachine.class,TileEntityMachine.class, ContainerMachine.class);
         }
         if(EnergyAPI.config.getFromConfig("enableTemplateBattery",1) == 1){
             int[] tex = TextureHelper.registerItemTexture(MOD_ID,"battery0.png");
@@ -126,14 +129,6 @@ public class EnergyAPI implements ModInitializer {
         return ratio * (valueCoord1 - startCoord1) + startCoord2;
     }
 
-    public static void displayGui(EntityPlayer entityplayer, GuiScreen guiScreen, Container container, IInventory tile) {
-        if(entityplayer instanceof EntityPlayerMP) {
-            ((IEntityPlayerMP)entityplayer).displayGuiScreen_energyapi(guiScreen,container,tile);
-        } else {
-            Minecraft.getMinecraft(Minecraft.class).displayGuiScreen(guiScreen);
-        }
-    }
-
     public static <K,V> Map<K,V> mapOf(K[] keys, V[] values){
         if(keys.length != values.length){
             throw new IllegalArgumentException("Arrays differ in size!");
@@ -146,10 +141,11 @@ public class EnergyAPI implements ModInitializer {
     }
 
 
-    public static void addToNameGuiMap(String name, Class<? extends Gui> guiClass, Class<? extends TileEntity> tileEntityClass){
+    public static void addToNameGuiMap(String name, Class<? extends Gui> guiClass, Class<? extends TileEntity> tileEntityClass, Class<? extends Container> containerClass){
         ArrayList<Class<?>> list = new ArrayList<>();
         list.add(guiClass);
         list.add(tileEntityClass);
+        list.add(containerClass);
         nameToGuiMap.put(name,list);
     }
 

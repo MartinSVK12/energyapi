@@ -9,7 +9,7 @@ import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.inventory.Container;
 import net.minecraft.core.player.inventory.slot.Slot;
 import sunsetsatellite.energyapi.impl.TileEntityEnergyConductor;
-import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayerMP;
+import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class ContainerEnergy extends Container {
         }
 
         for (ICrafting crafter : this.crafters) {
-            ((IEntityPlayerMP) crafter).updateEnergy(this, energy, capacity, maxReceive, maxProvide);
+            ((IEntityPlayer) crafter).updateEnergy(this, energy, capacity, maxReceive, maxProvide);
         }
 
         this.energy = ((TileEntityEnergyConductor)tile).energy;

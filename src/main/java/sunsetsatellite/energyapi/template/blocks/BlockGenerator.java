@@ -11,7 +11,10 @@ import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.inventory.IInventory;
 import net.minecraft.core.world.World;
 import sunsetsatellite.energyapi.EnergyAPI;
+import sunsetsatellite.energyapi.interfaces.mixins.IEntityPlayer;
+import sunsetsatellite.energyapi.template.containers.ContainerBatteryBox;
 import sunsetsatellite.energyapi.template.containers.ContainerGenerator;
+import sunsetsatellite.energyapi.template.gui.GuiBatteryBox;
 import sunsetsatellite.energyapi.template.gui.GuiGenerator;
 import sunsetsatellite.energyapi.template.tiles.TileEntityGenerator;
 
@@ -22,11 +25,11 @@ public class BlockGenerator extends BlockTileEntityRotatable {
 
     public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-        if(Minecraft.getMinecraft(Minecraft.class) != null)
+        if(!world.isClientSide)
         {
             TileEntityGenerator tile = (TileEntityGenerator) world.getBlockTileEntity(i, j, k);
             if(tile != null) {
-                EnergyAPI.displayGui(entityplayer,new GuiGenerator(entityplayer.inventory, tile),new ContainerGenerator(entityplayer.inventory,tile),tile);
+                ((IEntityPlayer)entityplayer).displayGuiScreen_energyapi(tile);
             }
         }
         return true;
