@@ -139,6 +139,9 @@ public class EnergyAPI implements ModInitializer {
         }
         return map;
     }
+    public static void displayGui(EntityPlayer entityPlayer, IInventory inventory){
+        ((IEntityPlayer)entityPlayer).displayGuiScreen_energyapi(inventory);
+    }
 
 
     public static void addToNameGuiMap(String name, Class<? extends Gui> guiClass, Class<? extends TileEntity> tileEntityClass, Class<? extends Container> containerClass){
