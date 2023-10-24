@@ -139,6 +139,10 @@ public class EnergyAPI implements ModInitializer {
         }
         return map;
     }
+    @Deprecated
+    public static void displayGui(EntityPlayer entityplayer, GuiScreen guiScreen, Container container, IInventory tile) {
+        displayGui(entityplayer, tile);
+    }
     public static void displayGui(EntityPlayer entityPlayer, IInventory inventory){
         ((IEntityPlayer)entityPlayer).displayGuiScreen_energyapi(inventory);
     }
