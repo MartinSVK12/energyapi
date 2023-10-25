@@ -141,7 +141,12 @@ public class EnergyAPI implements ModInitializer {
     }
     @Deprecated
     public static void displayGui(EntityPlayer entityplayer, GuiScreen guiScreen, Container container, IInventory tile) {
-        displayGui(entityplayer, tile);
+        if (entityplayer instanceof EntityPlayerMP){
+            displayGui(entityplayer, tile);
+        } else {
+            Minecraft.getMinecraft(Minecraft.class).displayGuiScreen(guiScreen);
+        }
+
     }
     public static void displayGui(EntityPlayer entityPlayer, IInventory inventory){
         ((IEntityPlayer)entityPlayer).displayGuiScreen_energyapi(inventory);
