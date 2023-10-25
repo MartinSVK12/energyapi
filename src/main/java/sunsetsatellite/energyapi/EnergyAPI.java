@@ -139,6 +139,18 @@ public class EnergyAPI implements ModInitializer {
         }
         return map;
     }
+    @Deprecated
+    public static void displayGui(EntityPlayer entityplayer, GuiScreen guiScreen, Container container, IInventory tile) {
+        if (entityplayer instanceof EntityPlayerMP){
+            displayGui(entityplayer, tile);
+        } else {
+            Minecraft.getMinecraft(Minecraft.class).displayGuiScreen(guiScreen);
+        }
+
+    }
+    public static void displayGui(EntityPlayer entityPlayer, IInventory inventory){
+        ((IEntityPlayer)entityPlayer).displayGuiScreen_energyapi(inventory);
+    }
 
 
     public static void addToNameGuiMap(String name, Class<? extends Gui> guiClass, Class<? extends TileEntity> tileEntityClass, Class<? extends Container> containerClass){
